@@ -1,9 +1,20 @@
-<!-- Hero Section - Desktop -->
+<!-- Hero Section - Responsive -->
 <div class="relative py-20 md:py-32 overflow-hidden">
-  <%= render "shared/hero/content", mobile: false %>
+  <!-- Headline and Description -->
+  <div class="text-center mb-20">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-8 px-4" style="color: #17233C;">
+      We take the 1% odds
+    </h1>
 
-  <!-- 3 Column Image Grid - Desktop -->
-  <div class="relative max-w-7xl mx-auto px-4 min-h-[600px]">
+    <div class="max-w-5xl mx-auto px-4">
+      <p class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light" style="color: #17233C; opacity: 0.8;">
+        We build what the probabilities say we shouldn't. A studio creating companies for markets others overlook.
+      </p>
+    </div>
+  </div>
+
+  <!-- Desktop: 3 Column Image Grid - Hidden on mobile -->
+  <div class="hidden md:block relative max-w-7xl mx-auto px-4 min-h-[600px]">
     <div class="grid grid-cols-3 gap-0">
 
       <!-- Column 1: Left -->
@@ -43,6 +54,33 @@
         <div class="absolute top-72 -left-16 w-full transform -rotate-2 hover:rotate-0 transition-transform z-18">
           <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=500&h=400&fit=crop" alt="Strategy" class="w-full h-80 object-cover rounded-lg shadow-lg border-2 border-white">
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile: 4 Overlapping Cards - Hidden on desktop -->
+  <div class="block md:hidden relative max-w-7xl mx-auto px-4 min-h-[500px]">
+    <div class="relative min-h-[500px]">
+
+      <!-- Image 1 - Top Left -->
+      <div class="absolute top-0 left-2 w-48 transform rotate-3 hover:rotate-0 transition-transform z-10">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop" alt="Analytics" class="w-full h-48 object-cover rounded-lg shadow-lg border-2 border-white">
+      </div>
+
+      <!-- Image 2 - Top Right -->
+      <div class="absolute top-8 right-2 w-48 transform -rotate-2 hover:rotate-0 transition-transform z-15">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop" alt="Data" class="w-full h-48 object-cover rounded-lg shadow-lg border-2 border-white">
+      </div>
+
+      <!-- Image 3 - Middle Left -->
+      <div class="absolute top-40 left-2 w-48 transform -rotate-2 hover:rotate-0 transition-transform z-20">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=500&fit=crop" alt="Team" class="w-full h-48 object-cover rounded-lg shadow-lg border-2 border-white">
+      </div>
+
+      <!-- Image 4 - Bottom Right -->
+      <div class="absolute top-[12rem] right-5 w-48 transform rotate-2 hover:rotate-0 transition-transform z-25">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=500&fit=crop" alt="Product" class="w-full h-48 object-cover rounded-lg shadow-lg border-2 border-white">
       </div>
 
     </div>
