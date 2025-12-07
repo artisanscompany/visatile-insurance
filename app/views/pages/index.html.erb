@@ -1,57 +1,4 @@
-<!-- Hero Section -->
-<div class="relative py-24 md:py-32 overflow-hidden">
-  <!-- Background Elements -->
-  <div class="absolute inset-0 -z-10">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-    <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
-  </div>
-
-  <div class="max-w-5xl mx-auto text-center px-4">
-    <div class="inline-block mb-6 px-4 py-2 bg-blue-50 rounded-full">
-      <span class="text-blue-600 font-semibold text-sm">Building Tomorrow's Companies</span>
-    </div>
-
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-6 leading-tight">
-      We turn
-      <span class="relative inline-block mx-3">
-        <span class="relative z-10">ideas</span>
-        <span class="absolute bottom-2 left-0 w-full h-4 bg-gradient-to-r from-blue-300 to-cyan-300 -rotate-1 opacity-60"></span>
-      </span>
-      into
-      <br class="hidden sm:block"/>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 animate-gradient">
-        thriving businesses
-      </span>
-    </h1>
-
-    <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-      Partner with us to build, launch, and scale your next venture with world-class expertise and proven playbooks
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a href="#contact" class="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-blue-500/50 transition-all inline-flex items-center justify-center gap-2">
-        Start Building
-        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </a>
-      <a href="#work" class="px-8 py-4 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-50 transition-all inline-flex items-center justify-center border-2 border-gray-200 hover:border-gray-300">
-        View Portfolio
-      </a>
-    </div>
-  </div>
-</div>
-
-<style>
-  @keyframes gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  .animate-gradient {
-    background-size: 200% auto;
-    animation: gradient 3s ease infinite;
-  }
-</style>
+<%= render "shared/hero" %>
 
 <!-- How We Work -->
 <div class="py-20 md:py-32 bg-white">
@@ -67,7 +14,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Step 1 -->
-      <div class="group relative bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+      <div class="group relative bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300 flex flex-col">
         <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform">
           <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
@@ -78,7 +25,7 @@
         <p class="text-gray-700 leading-relaxed mb-6">
           We validate your concept, research the market, and craft a strategy that wins
         </p>
-        <div class="space-y-2">
+        <div class="space-y-2 mt-auto">
           <div class="flex items-center gap-2 text-sm text-gray-700">
             <div class="w-1.5 h-1.5 bg-blue-600 rounded-full"></div>
             Market research & validation
@@ -95,7 +42,7 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="group relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+      <div class="group relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300 flex flex-col">
         <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform">
           <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
@@ -106,7 +53,7 @@
         <p class="text-gray-700 leading-relaxed mb-6">
           World-class design and engineering to bring your product to life
         </p>
-        <div class="space-y-2">
+        <div class="space-y-2 mt-auto">
           <div class="flex items-center gap-2 text-sm text-gray-700">
             <div class="w-1.5 h-1.5 bg-cyan-600 rounded-full"></div>
             UX/UI design system
@@ -123,7 +70,7 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="group relative bg-gradient-to-br from-green-50 to-cyan-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+      <div class="group relative bg-gradient-to-br from-green-50 to-cyan-50 p-8 rounded-3xl hover:shadow-xl transition-all duration-300 flex flex-col">
         <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-600 to-cyan-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform">
           <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
@@ -134,7 +81,7 @@
         <p class="text-gray-700 leading-relaxed mb-6">
           Data-driven growth strategies to dominate your market
         </p>
-        <div class="space-y-2">
+        <div class="space-y-2 mt-auto">
           <div class="flex items-center gap-2 text-sm text-gray-700">
             <div class="w-1.5 h-1.5 bg-green-600 rounded-full"></div>
             Growth marketing

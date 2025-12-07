@@ -1,14 +1,27 @@
-<header class="bg-white sticky top-0 z-50 w-full">
+<header class="bg-white/95 backdrop-blur-sm sticky top-0 z-50 w-full">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex items-center justify-between h-20">
       <!-- Logo -->
       <div class="flex items-center">
         <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
-          <span class="text-2xl font-black text-gray-900 group-hover:text-blue-600 transition-colors">CR4FTS</span>
+          <span class="text-3xl font-black tracking-tight" style="color: #17233C;">
+            CR4FTS
+          </span>
         <% end %>
       </div>
 
+      <!-- Navigation Buttons -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="https://hackerhouse.com" target="_blank" rel="noopener noreferrer" style="padding: 0.625rem 1.5rem; background: #195ED0; color: white; font-weight: 700; border-radius: 0.5rem; transition: all 0.2s;">
+          Hackerspace
+        </a>
+        <a href="#ventures" style="padding: 0.625rem 1.5rem; background: white; border: 2px solid #e5e7eb; color: #111827; font-weight: 700; border-radius: 0.5rem; transition: all 0.2s;">
+          Ventures
+        </a>
+        <a href="#contact" style="padding: 0.625rem 1.5rem; background: white; border: 2px solid #e5e7eb; color: #111827; font-weight: 700; border-radius: 0.5rem; transition: all 0.2s;">
+          Contact
+        </a>
+      </div>
     </div>
   </nav>
-
 </header>
