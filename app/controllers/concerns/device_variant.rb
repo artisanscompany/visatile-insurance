@@ -13,6 +13,8 @@ module DeviceVariant
       request.variant = params[:variant].to_sym
     elsif mobile_device?
       request.variant = :mobile
+    else
+      request.variant = :desktop
     end
   end
 
