@@ -1,3 +1,13 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#17233C" rx="90"/>
+
+  <!-- Large "1%" centered text using Nunito font -->
+  <text x="256" y="320" font-family="'Nunito', sans-serif" font-size="180" font-weight="900" fill="#FAFAFA" text-anchor="middle">1%</text>
 </svg>
