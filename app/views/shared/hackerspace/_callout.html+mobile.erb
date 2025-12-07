@@ -1,0 +1,15 @@
+<!-- Hackerspace Callout - Mobile -->
+<div class="relative py-10 overflow-visible">
+  <!-- Skewed container with shadow -->
+  <div class="absolute inset-0 transform -skew-y-0.5 shadow-2xl rounded-3xl" style="background-color: #17233C;">
+    <!-- Grid pattern background -->
+    <div class="absolute inset-0 opacity-30 rounded-3xl" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-6">
+    <!-- Single Column - Content Only (no image on mobile) -->
+    <div class="text-center">
+      <%= render "shared/hackerspace/content", mobile: true %>
+    </div>
+  </div>
+</div>

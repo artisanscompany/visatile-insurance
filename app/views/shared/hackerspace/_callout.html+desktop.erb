@@ -1,0 +1,26 @@
+<!-- Hackerspace Callout - Desktop -->
+<div class="relative py-12 md:py-20 overflow-visible">
+  <!-- Skewed container with shadow -->
+  <div class="absolute inset-0 transform -skew-y-0.5 shadow-2xl rounded-3xl" style="background-color: #17233C;">
+    <!-- Grid pattern background -->
+    <div class="absolute inset-0 opacity-30 rounded-3xl" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 gap-12 items-center">
+
+      <!-- Left Column - Content -->
+      <div class="text-left">
+        <%= render "shared/hackerspace/content", mobile: false %>
+      </div>
+
+      <!-- Right Column - Image -->
+      <div class="flex justify-start">
+        <div class="relative w-full max-w-md">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=600&fit=crop" alt="Hackerspace Community" class="w-full h-auto rounded-2xl shadow-2xl border-4 border-white/10">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
