@@ -4,11 +4,11 @@
 
     <!-- Section Heading -->
     <div class="text-center mb-12 md:mb-16">
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight" style="color: #17233C;">
-        Our Ventures
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-snug mb-2 md:mb-3" style="color: #17233C; letter-spacing: -0.02em; word-spacing: -0.05em;">
+        Bets we are making
       </h2>
-      <p class="mt-6 text-xl md:text-2xl font-light max-w-3xl mx-auto" style="color: #17233C; opacity: 0.8;">
-        Companies we've built from the 1% odds
+      <p class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light max-w-5xl mx-auto" style="color: #17233C; opacity: 0.8;">
+        Our portfolio of hard problems and long odds.
       </p>
     </div>
 
@@ -69,21 +69,29 @@
         </button>
       </div>
 
-      <!-- Card 4 - Notarials 1x1 -->
+      <!-- Card 4 - Notarials 1x1 (Stealth) -->
       <div class="col-span-1 md:col-span-1 md:row-span-1">
-        <button type="button" data-venture="notarials" data-action="click->portfolio#openModal"
-           class="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 venture-card border-4 border-white">
+        <div class="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl transition-all duration-500 venture-card border-4 border-white cursor-default">
           <div class="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=800&fit=crop"
                  alt="Notarials"
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                 class="w-full h-full object-cover">
           </div>
-          <div class="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent group-hover:from-black/60 transition-all duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent"></div>
+          <!-- Stealth Badge -->
+          <div class="absolute top-4 right-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full" style="background-color: rgba(23, 35, 60, 0.9); backdrop-filter: blur(10px); color: white;">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+              </svg>
+              Stealth
+            </span>
+          </div>
           <div class="absolute inset-0 flex flex-col justify-end items-start p-5 md:p-6">
             <h3 class="text-xl md:text-2xl font-black text-white mb-1 leading-tight text-left">Notarials</h3>
             <p class="text-white/70 text-xs md:text-sm font-medium text-left">Digital Notary</p>
           </div>
-        </button>
+        </div>
       </div>
 
       <!-- Card 5 - Corppy 1x1 (Stealth) -->
@@ -166,16 +174,52 @@
         </div>
       </div>
 
-      <!-- Card 8 - Empty Slot -->
+      <!-- Card 8 - Clauseless (Stealth) -->
       <div class="col-span-1">
-        <div class="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-lg transition-all duration-500 venture-card border-4 border-dashed" style="border-color: rgba(23, 35, 60, 0.2); background: linear-gradient(135deg, rgba(23, 35, 60, 0.03) 0%, rgba(23, 35, 60, 0.06) 100%);">
-          <div class="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-5">
-            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full mb-3 flex items-center justify-center transition-transform duration-500 group-hover:scale-110" style="background-color: rgba(23, 35, 60, 0.1);">
-              <svg class="w-6 h-6 md:w-8 md:h-8" style="color: rgba(23, 35, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        <div class="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl transition-all duration-500 venture-card border-4 border-white cursor-default">
+          <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=600&fit=crop"
+                 alt="Clauseless"
+                 class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent"></div>
+          <!-- Stealth Badge -->
+          <div class="absolute top-3 right-3">
+            <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full" style="background-color: rgba(23, 35, 60, 0.9); backdrop-filter: blur(10px); color: white;">
+              <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
               </svg>
-            </div>
-            <p class="text-xs md:text-sm font-bold text-center" style="color: rgba(23, 35, 60, 0.4);">Coming Soon</p>
+              Stealth
+            </span>
+          </div>
+          <div class="absolute inset-0 flex flex-col justify-end items-start p-4 md:p-5">
+            <h3 class="text-base md:text-xl font-black text-white leading-tight text-left">Clauseless</h3>
+            <p class="text-white/70 text-xs font-medium text-left">Legal Tech</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 - Hospiceble (Stealth) -->
+      <div class="col-span-1">
+        <div class="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl transition-all duration-500 venture-card border-4 border-white cursor-default">
+          <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=600&fit=crop"
+                 alt="Hospiceble"
+                 class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent"></div>
+          <!-- Stealth Badge -->
+          <div class="absolute top-3 right-3">
+            <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full" style="background-color: rgba(23, 35, 60, 0.9); backdrop-filter: blur(10px); color: white;">
+              <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+              </svg>
+              Stealth
+            </span>
+          </div>
+          <div class="absolute inset-0 flex flex-col justify-end items-start p-4 md:p-5">
+            <h3 class="text-base md:text-xl font-black text-white leading-tight text-left">Hospiceble</h3>
+            <p class="text-white/70 text-xs font-medium text-left">Healthcare</p>
           </div>
         </div>
       </div>

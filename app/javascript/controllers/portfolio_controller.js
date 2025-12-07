@@ -44,6 +44,16 @@ export default class extends Controller {
         title: 'Recordness',
         description: 'Stealth mode. Building tools for knowledge management and documentation.',
         image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=800&fit=crop'
+      },
+      clauseless: {
+        title: 'Clauseless',
+        description: 'Stealth mode. Simplifying legal processes.',
+        image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=800&fit=crop'
+      },
+      hospiceble: {
+        title: 'Hospiceble',
+        description: 'Stealth mode. Improving end-of-life care.',
+        image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=800&fit=crop'
       }
     }
 
