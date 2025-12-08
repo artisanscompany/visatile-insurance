@@ -1,20 +1,30 @@
 class ContactsController < ApplicationController
-  def new
-    @contact = Contact.new
-  end
-
   def create
     @contact = Contact.new(contact_params)
 
     if @contact.valid?
+      # Send notification email to CR4FTS
       ContactMailer.contact_email(
         name: @contact.name,
         email: @contact.email,
         message: @contact.message
       ).deliver_later
-      redirect_to root_path, notice: "Thanks for reaching out! We'll get back to you soon."
+
+      # Send confirmation email to user
+      ContactMailer.confirmation_email(
+        name: @contact.name,
+        email: @contact.email
+      ).deliver_later
+
+      respond_to do |format|
+        format.html { redirect_to root_path(anchor: "contact"), notice: "Thanks for reaching out! We'll get back to you soon." }
+        format.turbo_stream { head :ok }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { redirect_to root_path(anchor: "contact"), alert: "Please fix the errors in the form." }
+        format.turbo_stream { head :unprocessable_entity }
+      end
     end
   end
 

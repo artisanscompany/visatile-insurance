@@ -10,4 +10,13 @@ class ContactMailer < ApplicationMailer
       reply_to: email
     )
   end
+
+  def confirmation_email(name:, email:)
+    @name = name
+
+    mail(
+      to: email,
+      subject: "Thanks for reaching out to CR4FTS"
+    )
+  end
 end

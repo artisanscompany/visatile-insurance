@@ -1,35 +1,41 @@
-<!-- Contact Page -->
-<div class="relative py-16 md:py-24">
+<!-- Contact Section -->
+<section id="contact" class="relative py-16 md:py-24">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section Heading -->
     <div class="text-center mb-12 md:mb-16">
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-snug mb-2 md:mb-3" style="color: #17233C; letter-spacing: -0.02em; word-spacing: -0.05em;">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-snug mb-2 md:mb-3" style="color: #17233C; letter-spacing: -0.02em; word-spacing: -0.05em;">
         Get in touch.
-      </h1>
+      </h2>
       <p class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light max-w-5xl mx-auto" style="color: #17233C; opacity: 0.8;">
         We read everything and respond to what resonates.
       </p>
     </div>
 
+    <!-- Success Message (hidden by default) -->
+    <div id="contact-success" class="hidden max-w-2xl mx-auto mb-8">
+      <div class="p-6 rounded-2xl border-2 border-green-200 bg-green-50">
+        <h3 class="text-xl font-bold mb-2" style="color: #17233C;">
+          Message sent successfully!
+        </h3>
+        <p class="text-lg" style="color: #17233C; opacity: 0.8;">
+          Thanks for reaching out! We'll get back to you soon.
+        </p>
+      </div>
+    </div>
+
     <!-- Contact Form -->
-    <div class="max-w-2xl mx-auto">
-      <div class="p-8 md:p-12 bg-white rounded-2xl shadow-lg border border-gray-200">
-        <%= form_with model: @contact, url: contact_path, method: :post, data: { controller: "contact-form", action: "submit->contact-form#submit" }, class: "space-y-6" do |f| %>
+    <div id="contact-form-container" class="max-w-2xl mx-auto">
+      <div class="p-8 md:p-12 border transform rotate-1 relative" style="background-color: #FFFFFF; border-color: #E5E7EB;">
+        <%= form_with model: Contact.new, url: contact_path, method: :post, data: { controller: "contact-form", action: "submit->contact-form#submit turbo:submit-end->contact-form#handleSuccess turbo:submit-start->contact-form#handleStart" }, class: "space-y-6" do |f| %>
 
           <!-- Error Messages -->
-          <% if @contact.errors.any? %>
-            <div class="p-4 rounded-xl border-2 border-red-200 bg-red-50">
-              <h3 class="text-lg font-bold mb-2" style="color: #17233C;">
-                Please fix the following <%= pluralize(@contact.errors.count, "error") %>:
-              </h3>
-              <ul class="list-disc list-inside space-y-1">
-                <% @contact.errors.full_messages.each do |message| %>
-                  <li class="text-red-700"><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+          <div id="contact-errors" class="hidden p-4 rounded-xl border-2 border-red-200 bg-red-50">
+            <h3 class="text-lg font-bold mb-2" style="color: #17233C;">
+              Please fix the following errors:
+            </h3>
+            <ul id="error-list" class="list-disc list-inside space-y-1"></ul>
+          </div>
 
           <!-- Name Field -->
           <div>
@@ -94,4 +100,4 @@
     </div>
 
   </div>
-</div>
+</section>
