@@ -7,7 +7,11 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if @contact.valid?
-      ContactMailer.contact_email(@contact).deliver_later
+      ContactMailer.contact_email(
+        name: @contact.name,
+        email: @contact.email,
+        message: @contact.message
+      ).deliver_later
       redirect_to root_path, notice: "Thanks for reaching out! We'll get back to you soon."
     else
       render :new, status: :unprocessable_entity

@@ -77,21 +77,21 @@
       <div class="content">
         <div class="field">
           <div class="field-label">From</div>
-          <div class="field-value"><%= @contact.name %></div>
+          <div class="field-value"><%= @name %></div>
         </div>
 
         <div class="field">
           <div class="field-label">Email</div>
           <div class="field-value">
-            <a href="mailto:<%= @contact.email %>" style="color: #60A5FA; text-decoration: none;">
-              <%= @contact.email %>
+            <a href="mailto:<%= @email %>" style="color: #60A5FA; text-decoration: none;">
+              <%= @email %>
             </a>
           </div>
         </div>
 
         <div class="field">
           <div class="field-label">Message</div>
-          <div class="field-value message"><%= @contact.message %></div>
+          <div class="field-value message"><%= @message %></div>
         </div>
       </div>
 

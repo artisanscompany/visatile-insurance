@@ -1,10 +1,13 @@
 class ContactMailer < ApplicationMailer
-  def contact_email(contact)
-    @contact = contact
+  def contact_email(name:, email:, message:)
+    @name = name
+    @email = email
+    @message = message
+
     mail(
       to: "hello@cr4fts.com",
-      subject: "New Contact Form Submission from #{contact.name}",
-      reply_to: contact.email
+      subject: "New Contact Form Submission from #{name}",
+      reply_to: email
     )
   end
 end
