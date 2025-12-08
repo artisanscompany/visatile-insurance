@@ -1,0 +1,97 @@
+<!-- Contact Page -->
+<div class="relative py-16 md:py-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section Heading -->
+    <div class="text-center mb-12 md:mb-16">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-snug mb-2 md:mb-3" style="color: #17233C; letter-spacing: -0.02em; word-spacing: -0.05em;">
+        Get in touch.
+      </h1>
+      <p class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light max-w-5xl mx-auto" style="color: #17233C; opacity: 0.8;">
+        We read everything and respond to what resonates.
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="max-w-2xl mx-auto">
+      <div class="p-8 md:p-12 bg-white rounded-2xl shadow-lg border border-gray-200">
+        <%= form_with model: @contact, url: contact_path, method: :post, data: { controller: "contact-form", action: "submit->contact-form#submit" }, class: "space-y-6" do |f| %>
+
+          <!-- Error Messages -->
+          <% if @contact.errors.any? %>
+            <div class="p-4 rounded-xl border-2 border-red-200 bg-red-50">
+              <h3 class="text-lg font-bold mb-2" style="color: #17233C;">
+                Please fix the following <%= pluralize(@contact.errors.count, "error") %>:
+              </h3>
+              <ul class="list-disc list-inside space-y-1">
+                <% @contact.errors.full_messages.each do |message| %>
+                  <li class="text-red-700"><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- Name Field -->
+          <div>
+            <%= f.label :name, "Your Name", class: "block text-sm font-bold mb-2 uppercase tracking-wider", style: "color: #17233C;" %>
+            <%= f.text_field :name,
+                required: true,
+                placeholder: "Jane Doe",
+                class: "w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:outline-none transition-colors",
+                style: "color: #17233C; background-color: #FAFAFA;" %>
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <%= f.label :email, "Email Address", class: "block text-sm font-bold mb-2 uppercase tracking-wider", style: "color: #17233C;" %>
+            <%= f.email_field :email,
+                required: true,
+                placeholder: "jane@example.com",
+                class: "w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:outline-none transition-colors",
+                style: "color: #17233C; background-color: #FAFAFA;" %>
+          </div>
+
+          <!-- Message Field -->
+          <div>
+            <%= f.label :message, "Message", class: "block text-sm font-bold mb-2 uppercase tracking-wider", style: "color: #17233C;" %>
+            <%= f.text_area :message,
+                required: true,
+                placeholder: "Tell us about your idea, challenge, or question...",
+                rows: 6,
+                class: "w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:outline-none transition-colors resize-y",
+                style: "color: #17233C; background-color: #FAFAFA;" %>
+          </div>
+
+          <!-- Honeypot (hidden spam protection) -->
+          <div style="position: absolute; left: -9999px;" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <%= f.submit "Send Message",
+                data: { contact_form_target: "submit" },
+                class: "w-full px-8 py-4 text-white text-lg font-bold rounded-xl hover:shadow-xl transition-all cursor-pointer",
+                style: "background: #17233C;" %>
+          </div>
+
+          <!-- Loading State (hidden by default) -->
+          <div data-contact-form-target="loading" class="hidden text-center py-4">
+            <p class="text-lg font-bold" style="color: #60A5FA;">Sending your message...</p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Alternative Contact -->
+      <div class="mt-8 text-center">
+        <p class="text-lg" style="color: #17233C; opacity: 0.8;">
+          Or email us directly at
+          <a href="mailto:hello@cr4fts.com" class="font-bold hover:underline" style="color: #60A5FA;">
+            hello@cr4fts.com
+          </a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
