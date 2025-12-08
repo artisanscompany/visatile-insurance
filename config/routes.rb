@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Email preview in development
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   resources :posts do
     post :test_worker, on: :collection
   end
