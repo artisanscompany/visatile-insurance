@@ -12,47 +12,47 @@ export default class extends Controller {
     this.ventures = {
       hisdoctor: {
         title: 'his.doctor',
-        description: 'The safe space for men to address health concerns. Telemedicine platform providing discreet access to licensed doctors for sexual health, mental wellness, and general care across East Africa. Man up. Check up.',
-        image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=1200&fit=crop'
+        description: 'Men\'s health infrastructure barely exists—stigma keeps men silent, systems ignore their needs. Building telemedicine that removes shame from seeking care for sexual health, mental wellness, and general concerns for African men.',
+        image: '/assets/his-doctor.jpg'
       },
       visatile: {
         title: 'Visatile',
-        description: 'AI-powered immigration copilot achieving 94% visa approval rates for African travelers. Combining Stampy AI with expert visa officers to predict approval odds, generate embassy-compliant documents, and eliminate rejection anxiety.',
+        description: 'Passport-disadvantaged Africans are trapped by broken visa systems that gatekeepers won\'t fix. Combining AI with expert visa officers to predict approval odds, optimize applications, and generate embassy-compliant documents—improving outcomes for travelers others have given up on.',
         image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=800&fit=crop'
       },
       build54: {
         title: 'Build54',
-        description: 'Finding Africa\'s hidden STEM talents through technical competitions. Hackathons, olympiads, and challenges across all 54 countries—discovering exceptional builders through what they create, not credentials.',
+        description: 'Exceptional African technical talent is invisible to credential-obsessed systems. Running competitions and hackathons across all 54 countries to discover builders through what they create—not where they studied or who they know.',
         image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=800&fit=crop'
       },
       notarials: {
         title: 'Notarials',
-        description: 'Modern notary services reimagined for the digital age. Streamlining document verification and notarization with technology-first approach.',
+        description: 'Centuries-old notary monopolies make document verification slow, expensive, and inaccessible. Building digital infrastructure to make notarization instant and secure—removing gatekeepers from critical processes.',
         image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=800&fit=crop'
       },
       corppy: {
         title: 'Corppy',
-        description: 'Stealth mode. Building infrastructure for the next generation of corporate operations.',
+        description: 'In stealth. Corporate compliance infrastructure too complex for incumbents to fix, too regulated for most to touch.',
         image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=800&fit=crop'
       },
       repoless: {
         title: 'Repoless',
-        description: 'Stealth mode. Rethinking how teams collaborate on technical work.',
+        description: 'In stealth. Developer collaboration tools optimized for legacy workflows, not how exceptional teams actually work.',
         image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=800&fit=crop'
       },
       recordness: {
         title: 'Recordness',
-        description: 'Stealth mode. Building tools for knowledge management and documentation.',
+        description: 'In stealth. Organizational knowledge loss that scales with growth—a problem everyone acknowledges, few attempt to solve.',
         image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=800&fit=crop'
       },
       clauseless: {
         title: 'Clauseless',
-        description: 'Stealth mode. Simplifying legal processes.',
+        description: 'In stealth. Legal processes locked behind cost and complexity—gatekeeping that preserves incumbents, not justice.',
         image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=800&fit=crop'
       },
       hospiceble: {
         title: 'Hospiceble',
-        description: 'Stealth mode. Improving end-of-life care.',
+        description: 'In stealth. End-of-life care systems that fail families when dignity matters most—too hard, too sad, too ignored.',
         image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=800&fit=crop'
       }
     }
@@ -69,14 +69,17 @@ export default class extends Controller {
   openModal(event) {
     console.log('openModal called')
     const ventureId = event.currentTarget.dataset.venture
+    const customImage = event.currentTarget.dataset.ventureImage
     console.log('ventureId:', ventureId)
+    console.log('customImage:', customImage)
     const venture = this.ventures[ventureId]
     console.log('venture:', venture)
 
     if (venture) {
       this.modalTitleTarget.textContent = venture.title
       this.modalDescriptionTarget.textContent = venture.description
-      this.modalImageTarget.src = venture.image
+      // Use custom image from data attribute if available, otherwise use default
+      this.modalImageTarget.src = customImage || venture.image
       this.modalImageTarget.alt = venture.title
 
       this.modalTarget.classList.add('show')
