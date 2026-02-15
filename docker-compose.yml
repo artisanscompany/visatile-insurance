@@ -10,9 +10,6 @@ services:
       # CRITICAL: Set PORT to 80 for Traefik routing
       PORT: "80"
 
-      # Database
-      DATABASE_URL: ${DATABASE_URL}
-
       # Rails
       RAILS_ENV: production
       RAILS_LOG_LEVEL: ${RAILS_LOG_LEVEL:-info}
@@ -24,10 +21,15 @@ services:
       # Performance
       RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-5}
       WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
-      DATABASE_POOL_SIZE: ${DATABASE_POOL_SIZE:-30}
 
       # Job processing
       JOB_CONCURRENCY: ${JOB_CONCURRENCY:-1}
+
+      # Email
+      POSTMARK_API_TOKEN: ${POSTMARK_API_TOKEN}
+
+    volumes:
+      - sqlite_data:/rails/storage
 
     # CRITICAL: Traefik labels for service discovery
     labels:
@@ -67,18 +69,25 @@ services:
     command: ["./bin/jobs"]
 
     environment:
-      DATABASE_URL: ${DATABASE_URL}
       RAILS_ENV: production
       RAILS_LOG_LEVEL: ${RAILS_LOG_LEVEL:-info}
       RAILS_LOG_TO_STDOUT: "true"
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       JOB_CONCURRENCY: ${JOB_CONCURRENCY:-1}
+      POSTMARK_API_TOKEN: ${POSTMARK_API_TOKEN}
+
+    volumes:
+      - sqlite_data:/rails/storage
 
     networks:
       - coolify
 
     restart: unless-stopped
+
+volumes:
+  sqlite_data:
+    driver: local
 
 networks:
   coolify:

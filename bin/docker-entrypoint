@@ -6,20 +6,15 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
-# Check for required environment variables
-if [ -z "${DATABASE_URL}" ]; then
-  echo "ERROR: DATABASE_URL environment variable is not set"
-  echo "Please configure DATABASE_URL in Coolify environment variables"
-  echo "Format: postgresql://user:password@host:5432/database_name"
-  exit 1
-fi
-
 if [ -z "${SECRET_KEY_BASE}" ]; then
   echo "ERROR: SECRET_KEY_BASE environment variable is not set"
   echo "Please configure SECRET_KEY_BASE in Coolify environment variables"
   echo "Generate with: docker run --rm <your-image> bundle exec rails secret"
   exit 1
 fi
+
+# Ensure storage directory exists for SQLite databases
+mkdir -p /rails/storage
 
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
@@ -38,18 +33,8 @@ if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   echo ""
 fi
 
-# If running the jobs worker, wait for database and prepare it
+# If running the jobs worker, prepare the database
 if [ "${1}" == "./bin/jobs" ]; then
-  echo "========================================="
-  echo "WORKER: Waiting for database..."
-  echo "========================================="
-  until ./bin/rails runner "ActiveRecord::Base.connection.execute('SELECT 1')" &> /dev/null; do
-    echo "Database not ready, waiting..."
-    sleep 2
-  done
-  echo "✓ Database connection established"
-  echo ""
-
   echo "========================================="
   echo "WORKER: Preparing database tables"
   echo "========================================="

@@ -34,7 +34,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         curl \
         libjemalloc2 \
         libvips \
-        postgresql-client \
+        libsqlite3-0 \
         git
 
 # Stage 3: Build stage
@@ -47,7 +47,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install --no-install-recommends -y \
         build-essential \
         git \
-        libpq-dev \
+        libsqlite3-dev \
         libyaml-dev \
         pkg-config
 
