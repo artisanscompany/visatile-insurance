@@ -37,7 +37,7 @@ services:
       - "traefik.enable=true"
 
       # HTTPS router
-      - "traefik.http.routers.cr4fts-website-web.rule=Host(`cr4fts-website.artisans.company`)"
+      - "traefik.http.routers.cr4fts-website-web.rule=Host(`cr4fts.com`)"
       - "traefik.http.routers.cr4fts-website-web.entrypoints=websecure"
       - "traefik.http.routers.cr4fts-website-web.tls=true"
       - "traefik.http.routers.cr4fts-website-web.tls.certresolver=letsencrypt"
@@ -46,7 +46,7 @@ services:
       - "traefik.http.services.cr4fts-website-web.loadbalancer.server.port=80"
 
       # HTTP router (redirect to HTTPS)
-      - "traefik.http.routers.cr4fts-website-web-http.rule=Host(`cr4fts-website.artisans.company`)"
+      - "traefik.http.routers.cr4fts-website-web-http.rule=Host(`cr4fts.com`)"
       - "traefik.http.routers.cr4fts-website-web-http.entrypoints=web"
       - "traefik.http.routers.cr4fts-website-web-http.middlewares=redirect-to-https"
 
