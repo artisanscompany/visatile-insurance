@@ -14,9 +14,12 @@ function VentureCard({ ventureKey }: { ventureKey: string }) {
       </div>
       <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30" />
       <div className="absolute inset-0 flex flex-col justify-end items-start p-4 md:p-5 lg:p-6">
-        <h3 className="text-base md:text-lg font-black text-white leading-tight text-left">
-          {venture.subtitle}
+        <h3 className="text-base md:text-lg font-black text-white mb-1 leading-tight text-left">
+          {venture.title}
         </h3>
+        <p className="text-white/70 text-xs md:text-sm font-medium text-left">
+          {venture.subtitle}
+        </p>
       </div>
     </div>
   )
@@ -36,9 +39,12 @@ function FeaturedCard({ ventureKey }: { ventureKey: string }) {
       </div>
       <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30" />
       <div className="absolute inset-0 flex flex-col justify-end items-start p-6 md:p-8">
-        <h3 className="text-2xl md:text-3xl font-black text-white leading-tight text-left">
-          {venture.subtitle}
+        <h3 className="text-2xl md:text-3xl font-black text-white mb-1 leading-tight text-left">
+          {venture.title}
         </h3>
+        <p className="text-white/70 text-sm md:text-base font-medium text-left">
+          {venture.subtitle}
+        </p>
       </div>
     </div>
   )
@@ -117,8 +123,8 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Bottom Section: 6 Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6">
+        {/* Bottom Section: 5 Cards Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           <div className="col-span-1">
             <VentureCard ventureKey="repoless" />
           </div>
@@ -130,9 +136,6 @@ export default function Portfolio() {
           </div>
           <div className="col-span-1">
             <VentureCard ventureKey="hospiceble" />
-          </div>
-          <div className="col-span-1">
-            <EmptySlot />
           </div>
           <div className="col-span-1">
             <EmptySlot />

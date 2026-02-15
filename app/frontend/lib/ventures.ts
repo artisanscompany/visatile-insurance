@@ -50,7 +50,7 @@ export const ventures: Record<string, Venture & { subtitle: string; modalImage?:
   repoless: {
     id: "repoless",
     title: "Repoless",
-    subtitle: "Developer Tools",
+    subtitle: "Dev Tools",
     description:
       "In stealth. Developer collaboration tools optimized for legacy workflows, not how exceptional teams actually work.",
     image: "/images/repoless.jpg",
