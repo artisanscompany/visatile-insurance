@@ -4,15 +4,10 @@
     <title><%= content_for(:title) || "Cr4fts - We take the 1% odds" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Coolify Template">
+    <meta name="application-name" content="Cr4fts">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -21,25 +16,22 @@
     <%# Google Fonts %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <%# Tailwind CSS CDN %>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <%# Includes all stylesheet files %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= vite_client_tag %>
+    <% if Rails.env.development? %>
+      <script type="module">
+        import RefreshRuntime from '/vite-dev/@react-refresh'
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+      </script>
+    <% end %>
+    <%= vite_javascript_tag "application.tsx", type: "module" %>
   </head>
 
-  <body class="min-h-screen flex flex-col font-sans" style="font-family: 'Nunito', sans-serif; background-color: #FAFAFA;">
-    <%= render "shared/header" %>
-
-    <main class="flex-1">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <%= yield %>
-      </div>
-    </main>
-
-    <%= render "shared/footer" %>
+  <body class="min-h-screen flex flex-col" style="font-family: 'Nunito Sans', system-ui, sans-serif; background-color: oklch(0.985 0.002 250);">
+    <%= yield %>
   </body>
 </html>

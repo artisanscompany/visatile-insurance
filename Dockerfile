@@ -62,12 +62,12 @@ RUN --mount=type=cache,target=/usr/local/bundle/cache,sharing=locked \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
+# Install JavaScript dependencies (before COPY . . for better caching)
+COPY package.json package-lock.json ./
+RUN npm ci
+
 # Copy application code
 COPY . .
-
-# Install JavaScript dependencies
-RUN --mount=type=cache,target=/rails/node_modules,sharing=locked \
-    npm install
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
