@@ -6,6 +6,10 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
+# Unset DATABASE_URL so Rails uses SQLite config from database.yml
+# (Coolify may auto-inject a PostgreSQL DATABASE_URL from linked resources)
+unset DATABASE_URL
+
 if [ -z "${SECRET_KEY_BASE}" ]; then
   echo "ERROR: SECRET_KEY_BASE environment variable is not set"
   echo "Please configure SECRET_KEY_BASE in Coolify environment variables"
