@@ -1,6 +1,6 @@
 export default function MakerspaceCallout() {
   return (
-    <div id="hackerspace" className="py-12 md:py-16">
+    <div id="makerspace" className="py-12 md:py-16">
       <div>
         <h2 className="text-lg font-bold text-black">Makerspace</h2>
         <p className="text-sm text-[#9B9B9B] mb-3">Our workshop in Nairobi</p>

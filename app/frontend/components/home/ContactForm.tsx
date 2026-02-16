@@ -51,6 +51,10 @@ export default function ContactForm() {
         <p className="text-sm text-[#9B9B9B]">Get in touch</p>
       </div>
 
+      <p className="text-base text-[#6B6B6B] mb-6 max-w-lg">
+        Tell us what you&apos;re building. No pitch deck required &mdash; just the problem, the insight, and why now.
+      </p>
+
       {success && (
         <div className="max-w-lg mb-8">
           <div className="p-4 rounded bg-[#DBEDDB] border border-[#4DAB9A]/30">

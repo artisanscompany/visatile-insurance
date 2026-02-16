@@ -1,6 +1,6 @@
 export default function Manifesto() {
   return (
-    <div className="py-12 md:py-16">
+    <div id="thesis" className="py-12 md:py-16">
       <div className="mb-4">
         <h2 className="text-lg font-bold text-black">Our thesis</h2>
         <p className="text-sm text-[#9B9B9B]">Why we exist</p>

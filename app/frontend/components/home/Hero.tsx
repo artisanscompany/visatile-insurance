@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <div className="pt-16 md:pt-24 pb-4">
+    <div id="hero" className="pt-16 md:pt-24 pb-4">
       <img
         src="/icon.png"
         alt="CR4FTS"

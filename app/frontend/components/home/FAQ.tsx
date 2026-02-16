@@ -111,7 +111,7 @@ export default function FAQ({ faqs }: FAQProps) {
     : fallbackFaqs
 
   return (
-    <div className="py-12 md:py-16">
+    <div id="convictions" className="py-12 md:py-16">
       <div className="mb-4">
         <h2 className="text-lg font-bold text-black">Convictions</h2>
         <p className="text-sm text-[#9B9B9B]">What we believe</p>
