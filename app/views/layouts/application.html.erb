@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="scroll-behavior: smooth;">
+<html>
   <head>
     <title><%= content_for(:title) || "Cr4fts - We take the 1% odds" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -16,7 +16,7 @@
     <%# Google Fonts %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <%= vite_client_tag %>
     <% if Rails.env.development? %>
@@ -31,7 +31,7 @@
     <%= vite_javascript_tag "application.tsx", type: "module" %>
   </head>
 
-  <body class="min-h-screen flex flex-col" style="font-family: 'Nunito Sans', system-ui, sans-serif; background-color: oklch(0.985 0.002 250);">
+  <body class="min-h-screen flex flex-col bg-white font-sans">
     <%= yield %>
   </body>
 </html>

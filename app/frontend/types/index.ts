@@ -27,6 +27,21 @@ export interface Venture {
   tags?: string[]
 }
 
+export interface Project {
+  id: string
+  name: string
+  category: string | null
+  description: string | null
+  url: string | null
+  image: string | null
+}
+
+export interface FaqItem {
+  id: string
+  question: string
+  answer: string
+}
+
 export interface ContactErrors {
   name?: string[]
   email?: string[]

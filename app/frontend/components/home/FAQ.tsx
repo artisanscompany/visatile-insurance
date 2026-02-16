@@ -1,147 +1,126 @@
 import { useState } from "react"
+import type { FaqItem } from "@/types"
 
-const faqItems = [
+const fallbackFaqs = [
   {
-    question: "What makes CR4FTS different from other studios?",
+    question: "Don't chase trends",
     answer:
-      "We focus exclusively on underserved markets and hard problems that others overlook. We're not chasing hot trends or proven markets\u2014we're building companies where the odds say we shouldn't.",
-    rotate: "rotate-1",
+      "No tourist founders. No optimizing for optics over outcomes. We won't touch a deal just because the market is hot or the deck is pretty. If you're building something safe that everyone already agrees on, we're the wrong partner.",
   },
   {
-    question: "Are you taking on new builders?",
+    question: "Capital has blind spots",
     answer:
-      "Yes. If you're building something hard and tired of hearing no, reach out. We work with founders who care about solving real problems in overlooked markets.",
-    rotate: "-rotate-1",
+      "Most money flows to where other money already went. That's not investing\u2014it's following. The markets that matter most are the ones capital hasn't reached yet. That's where we operate.",
   },
   {
-    question: "Do you accept external companies?",
+    question: "Back what others won't",
     answer:
-      "Yes, we incubate companies from the idea stage. If you're tackling underserved markets and hard problems, we provide hands-on support to help you build and scale.",
-    rotate: "rotate-1",
+      "The best companies are built where consensus is wrong. Every market that looks obvious today was once dismissed as too small, too hard, or too early. We exist to find those moments before anyone else does\u2014and to build with the people crazy enough to go after them.",
   },
   {
-    question: "What do you provide to companies you work with?",
+    question: "Don't do pattern matching",
     answer:
-      "We provide capital, hands-on operational support, technical expertise, and access to our network. We work alongside founders to build, scale, and navigate the challenges of underserved markets.",
-    rotate: "-rotate-1",
+      "The next defining company won't look like the last one. Pattern matching is how you fund copies of what already exists. We'd rather understand why something could work than check if it fits a template.",
   },
   {
-    question: "Do you run cohorts or accept applications on a rolling basis?",
+    question: "Fail on something that matters",
     answer:
-      "We accept applications on a rolling basis. There are no cohorts or fixed deadlines\u2014if you're building something that fits our thesis, reach out anytime.",
-    rotate: "rotate-1",
+      "Safe bets produce safe outcomes. We're not here to build another incremental improvement. If we're going to spend years on something, it should be worth the risk of being wrong.",
   },
   {
-    question: 'What does "stealth mode" mean for your ventures?',
+    question: "Think in decades, not demo days",
     answer:
-      "We're actively building these companies but keeping details private until the right moment. They're in development, not dormant.",
-    rotate: "-rotate-1",
+      "The hardest problems don't resolve in 12 weeks. We don't pressure founders into artificial timelines or premature scaling. Build it right. We'll be here.",
   },
   {
-    question: "What is your social enterprise program?",
+    question: "Conviction doesn't need consensus",
     answer:
-      "We run a social enterprise program through Build54, supporting non-profits that tackle critical societal challenges. If you're building solutions that create meaningful impact in underserved communities, we want to hear from you.",
-    rotate: "rotate-1",
+      "We've never needed a room full of people to agree before we move. One person with deep understanding of a problem is worth more than a hundred who've read the same market report.",
   },
   {
-    question: "How can I get in touch?",
-    answer: "",
-    answerHtml: true,
-    rotate: "-rotate-1",
+    question: "Odds measure consensus, not potential",
+    answer:
+      "Low odds just mean most people disagree\u2014it says nothing about whether you're right. The entire history of transformative companies is a history of bets that looked irrational at the time. We'd rather be non-consensus and right than safe and irrelevant.",
+  },
+  {
+    question: "The asymmetry is in underserved markets",
+    answer:
+      "A billion people, entire industries being built from scratch, problems that can't be solved with copy-paste playbooks from Silicon Valley. The founders building here aren't just starting companies\u2014they're defining categories. That's where we want to be.",
+  },
+  {
+    question: "Build the ecosystem, not just the companies.",
+    answer:
+      "Infrastructure, talent, community\u2014none of it exists yet in the markets we operate in, so we build it ourselves. Every makerspace we open, every builder we train, every founder we back adds a node to a network that didn't exist before. We're not waiting for the ecosystem to mature. We are the ecosystem maturing.",
+  },
+  {
+    question: "Small markets today, inevitable markets tomorrow",
+    answer:
+      "Every massive market was once too small to matter. Mobile payments in Africa, telemedicine in rural communities, digital identity for the unbanked\u2014these weren't trends when the first builders started. They were convictions.",
+  },
+  {
+    question: "If you're building something hard, you can just reach out.",
+    answer:
+      "Use the form below or email hello@cr4fts.com. Skip the formalities\u2014tell us what you're building, why it matters, and why now. We read everything. If it resonates, we'll respond fast.",
   },
 ]
 
-function FAQItem({
+function FAQItemRow({
   question,
   answer,
-  answerHtml,
-  rotate,
 }: {
   question: string
   answer: string
-  answerHtml?: boolean
-  rotate: string
 }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div
-      className={`p-6 md:p-8 border rounded-2xl transform ${rotate} relative`}
-      style={{ backgroundColor: "#FFFFFF", borderColor: "#E5E7EB" }}
-    >
+    <div>
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left flex items-center justify-between hover:opacity-80 transition-opacity cursor-pointer"
+        className="w-full text-left flex items-start gap-2 py-1.5 cursor-pointer"
       >
-        <h3
-          className="text-lg md:text-xl font-black pr-8"
-          style={{ color: "#17233C", letterSpacing: "-0.02em" }}
-        >
-          {question}
-        </h3>
         <svg
-          className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-          style={{ color: "#17233C" }}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          className={`w-4 h-4 mt-0.5 flex-shrink-0 text-[#9B9B9B] transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+          viewBox="0 0 16 16"
+          fill="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          <path d="M6 4l4 4-4 4V4z" />
         </svg>
+        <span className="text-base font-semibold text-black">
+          {question}
+        </span>
       </button>
       {open && (
-        <div className="pt-4">
-          {answerHtml ? (
-            <p
-              className="text-lg md:text-xl font-light leading-relaxed"
-              style={{ color: "#17233C", opacity: 0.8 }}
-            >
-              Reach out through our contact form or email us at{" "}
-              <a href="mailto:hello@cr4fts.com" className="font-bold hover:underline" style={{ color: "#60A5FA" }}>
-                hello@cr4fts.com
-              </a>
-              . We read everything and respond to what resonates.
-            </p>
-          ) : (
-            <p
-              className="text-lg md:text-xl font-light leading-relaxed"
-              style={{ color: "#17233C", opacity: 0.8 }}
-            >
-              {answer}
-            </p>
-          )}
+        <div className="pl-6 pb-2">
+          <p className="text-base text-[#6B6B6B] leading-relaxed">
+            {answer}
+          </p>
         </div>
       )}
     </div>
   )
 }
 
-export default function FAQ() {
-  return (
-    <div className="relative py-16 md:py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-black leading-snug mb-2 md:mb-3"
-            style={{ color: "#17233C", letterSpacing: "-0.02em", wordSpacing: "-0.05em" }}
-          >
-            Quick answers.
-          </h2>
-          <p
-            className="text-xl md:text-2xl lg:text-3xl leading-relaxed font-light"
-            style={{ color: "#17233C", opacity: 0.8 }}
-          >
-            To the questions we hear most.
-          </p>
-        </div>
+interface FAQProps {
+  faqs: FaqItem[]
+}
 
-        {/* FAQ Accordion Items */}
-        <div className="space-y-6">
-          {faqItems.map((item, index) => (
-            <FAQItem key={index} {...item} />
-          ))}
-        </div>
+export default function FAQ({ faqs }: FAQProps) {
+  const items = faqs.length > 0
+    ? faqs.map((f) => ({ question: f.question, answer: f.answer }))
+    : fallbackFaqs
+
+  return (
+    <div className="py-12 md:py-16">
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-black">Convictions</h2>
+        <p className="text-sm text-[#9B9B9B]">What we believe</p>
+      </div>
+
+      <div>
+        {items.map((item, index) => (
+          <FAQItemRow key={index} question={item.question} answer={item.answer} />
+        ))}
       </div>
     </div>
   )

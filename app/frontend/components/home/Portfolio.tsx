@@ -1,146 +1,59 @@
-import { ventures } from "@/lib/ventures"
+import type { Project } from "@/types"
 
-function VentureCard({ ventureKey }: { ventureKey: string }) {
-  const venture = ventures[ventureKey]
-
-  return (
-    <div className="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl transition-all duration-500 venture-card border-4 border-white cursor-default">
-      <div className="absolute inset-0">
-        <img
-          src={venture.image}
-          alt={venture.subtitle}
-          className="w-full h-full object-cover grayscale"
-        />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30" />
-      <div className="absolute inset-0 flex flex-col justify-end items-start p-4 md:p-5 lg:p-6">
-        <h3 className="text-base md:text-lg font-black text-white mb-1 leading-tight text-left">
-          {venture.title}
-        </h3>
-        <p className="text-white/70 text-xs md:text-sm font-medium text-left">
-          {venture.subtitle}
-        </p>
-      </div>
-    </div>
-  )
+interface PortfolioProps {
+  projects: Project[]
 }
 
-function FeaturedCard({ ventureKey }: { ventureKey: string }) {
-  const venture = ventures[ventureKey]
+export default function Portfolio({ projects }: PortfolioProps) {
+  const totalSlots = 10
+  const emptySlots = Math.max(0, totalSlots - projects.length)
 
   return (
-    <div className="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-xl transition-all duration-500 venture-card border-4 border-white cursor-default">
-      <div className="absolute inset-0">
-        <img
-          src={venture.image}
-          alt={venture.subtitle}
-          className="w-full h-full object-cover grayscale"
-        />
+    <div id="ventures" className="py-12 md:py-16 scroll-mt-14">
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-black">Ventures</h2>
+        <p className="text-sm text-[#9B9B9B]">Bets we are making</p>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30" />
-      <div className="absolute inset-0 flex flex-col justify-end items-start p-6 md:p-8">
-        <h3 className="text-2xl md:text-3xl font-black text-white mb-1 leading-tight text-left">
-          {venture.title}
-        </h3>
-        <p className="text-white/70 text-sm md:text-base font-medium text-left">
-          {venture.subtitle}
-        </p>
-      </div>
-    </div>
-  )
-}
 
-function EmptySlot() {
-  return (
-    <div
-      className="block w-full pb-[100%] relative group overflow-hidden rounded-3xl shadow-lg transition-all duration-500 venture-card border-4 border-dashed"
-      style={{
-        borderColor: "rgba(23, 35, 60, 0.2)",
-        background: "linear-gradient(135deg, rgba(23, 35, 60, 0.03) 0%, rgba(23, 35, 60, 0.06) 100%)",
-      }}
-    >
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-5">
-        <div
-          className="w-12 h-12 md:w-16 md:h-16 rounded-full mb-3 flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
-          style={{ backgroundColor: "rgba(23, 35, 60, 0.1)" }}
-        >
-          <svg
-            className="w-6 h-6 md:w-8 md:h-8"
-            style={{ color: "rgba(23, 35, 60, 0.3)" }}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      <div className="space-y-1">
+        {projects.map((project) => (
+          <div
+            key={project.id}
+            className="py-1.5 group flex items-center gap-2"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </div>
-        <p className="text-xs md:text-sm font-bold text-center" style={{ color: "rgba(23, 35, 60, 0.4)" }}>
-          Coming Soon
-        </p>
-      </div>
-    </div>
-  )
-}
+            <span className="text-base font-semibold text-black group-hover:underline">
+              {project.name}
+            </span>
+            {project.category && (
+              <span className="text-sm text-[#9B9B9B]">
+                {project.category}
+              </span>
+            )}
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#6B6B6B] opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            )}
+          </div>
+        ))}
 
-export default function Portfolio() {
-  return (
-    <div id="ventures" className="relative py-16 md:py-24 scroll-mt-20">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-black leading-snug mb-2 md:mb-3"
-            style={{ color: "#17233C", letterSpacing: "-0.02em", wordSpacing: "-0.05em" }}
+        {Array.from({ length: emptySlots }).map((_, i) => (
+          <div
+            key={`empty-${i}`}
+            className="py-1.5"
           >
-            Bets we are making.
-          </h2>
-          <p
-            className="text-xl md:text-2xl lg:text-3xl leading-relaxed font-light"
-            style={{ color: "#17233C", opacity: 0.8 }}
-          >
-            Our stakes on hard problems and long odds.
-          </p>
-        </div>
-
-        {/* Top Section: 1 Featured + 4 Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-6">
-          {/* Featured Card - Large 2x2 */}
-          <div className="col-span-2 md:col-span-2 md:row-span-2">
-            <FeaturedCard ventureKey="hisdoctor" />
+            <span className="text-sm text-[#C8C8C8] italic">
+              Coming soon
+            </span>
           </div>
-
-          <div className="col-span-1">
-            <VentureCard ventureKey="visatile" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="build54" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="notarials" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="corppy" />
-          </div>
-        </div>
-
-        {/* Bottom Section: 5 Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
-          <div className="col-span-1">
-            <VentureCard ventureKey="repoless" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="recordness" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="clauseless" />
-          </div>
-          <div className="col-span-1">
-            <VentureCard ventureKey="hospiceble" />
-          </div>
-          <div className="col-span-1">
-            <EmptySlot />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   )

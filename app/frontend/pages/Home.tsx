@@ -4,15 +4,21 @@ import Portfolio from "@/components/home/Portfolio"
 import MakerspaceCallout from "@/components/home/MakerspaceCallout"
 import FAQ from "@/components/home/FAQ"
 import ContactForm from "@/components/home/ContactForm"
+import type { Project, FaqItem } from "@/types"
 
-export default function Home() {
+interface HomeProps {
+  projects: Project[]
+  faqs: FaqItem[]
+}
+
+export default function Home({ projects, faqs }: HomeProps) {
   return (
     <>
       <Hero />
       <Manifesto />
-      <Portfolio />
+      <Portfolio projects={projects} />
       <MakerspaceCallout />
-      <FAQ />
+      <FAQ faqs={faqs} />
       <ContactForm />
     </>
   )
