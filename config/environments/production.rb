@@ -55,10 +55,14 @@ Rails.application.configure do
 
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :solid_cache_store
+  config.solid_cache.connects_to = { database: { writing: :cache, reading: :cache } }
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue, reading: :queue } }
+
+  # Configure Action Cable to use the cable database.
+  config.solid_cable.connects_to = { database: { writing: :cable, reading: :cable } }
 
   # Configure email delivery via Postmark
   config.action_mailer.delivery_method = :postmark
