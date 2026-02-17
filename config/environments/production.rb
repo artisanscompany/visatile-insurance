@@ -61,9 +61,6 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue, reading: :queue } }
 
-  # Configure Action Cable to use the cable database.
-  config.solid_cable.connects_to = { database: { writing: :cable, reading: :cable } }
-
   # Configure email delivery via Postmark
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = {
