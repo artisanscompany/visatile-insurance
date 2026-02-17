@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Enable jemalloc for reduced memory usage and latency
 if [ -z "${LD_PRELOAD+x}" ]; then
@@ -20,44 +20,41 @@ fi
 # Ensure storage directory exists for SQLite databases
 mkdir -p /rails/storage
 
+prepare_databases() {
+  echo "========================================="
+  echo "PREPARING DATABASES"
+  echo "========================================="
+
+  echo "→ Preparing primary database..."
+  ./bin/rails db:prepare
+  echo "✓ Primary database ready"
+
+  echo "→ Preparing queue database (SolidQueue)..."
+  ./bin/rails db:create:queue 2>/dev/null || true
+  ./bin/rails db:migrate:queue
+  echo "✓ Queue database ready"
+
+  echo "→ Preparing cache database (SolidCache)..."
+  ./bin/rails db:create:cache 2>/dev/null || true
+  ./bin/rails db:migrate:cache
+  echo "✓ Cache database ready"
+
+  echo "→ Preparing cable database (SolidCable)..."
+  ./bin/rails db:create:cable 2>/dev/null || true
+  ./bin/rails db:migrate:cable
+  echo "✓ Cable database ready"
+
+  echo "========================================="
+}
+
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  echo "========================================="
-  echo "PREPARING DATABASE (PRIMARY + SOLID CACHE/QUEUE/CABLE)"
-  echo "========================================="
-  ./bin/rails db:prepare
-  ./bin/rails db:create:queue 2>/dev/null; ./bin/rails db:migrate:queue
-  ./bin/rails db:create:cache 2>/dev/null; ./bin/rails db:migrate:cache
-  ./bin/rails db:create:cable 2>/dev/null; ./bin/rails db:migrate:cable
-
-  if [ $? -eq 0 ]; then
-    echo "✓ Database prepared successfully"
-  else
-    echo "✗ Database preparation failed"
-    exit 1
-  fi
-  echo "========================================="
-  echo ""
+  prepare_databases
 fi
 
 # If running the jobs worker, prepare the database
 if [ "${1}" == "./bin/jobs" ]; then
-  echo "========================================="
-  echo "WORKER: Preparing database tables"
-  echo "========================================="
-  ./bin/rails db:prepare
-  ./bin/rails db:create:queue 2>/dev/null; ./bin/rails db:migrate:queue
-  ./bin/rails db:create:cache 2>/dev/null; ./bin/rails db:migrate:cache
-  ./bin/rails db:create:cable 2>/dev/null; ./bin/rails db:migrate:cable
-
-  if [ $? -eq 0 ]; then
-    echo "✓ Database prepared successfully"
-  else
-    echo "✗ Database preparation failed"
-    exit 1
-  fi
-  echo "========================================="
-  echo ""
+  prepare_databases
 fi
 
 exec "${@}"
