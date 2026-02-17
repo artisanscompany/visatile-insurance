@@ -25,7 +25,10 @@ if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   echo "========================================="
   echo "PREPARING DATABASE (PRIMARY + SOLID CACHE/QUEUE/CABLE)"
   echo "========================================="
-  ./bin/rails db:prepare:all
+  ./bin/rails db:prepare
+  ./bin/rails db:create:queue 2>/dev/null; ./bin/rails db:migrate:queue
+  ./bin/rails db:create:cache 2>/dev/null; ./bin/rails db:migrate:cache
+  ./bin/rails db:create:cable 2>/dev/null; ./bin/rails db:migrate:cable
 
   if [ $? -eq 0 ]; then
     echo "✓ Database prepared successfully"
@@ -42,7 +45,10 @@ if [ "${1}" == "./bin/jobs" ]; then
   echo "========================================="
   echo "WORKER: Preparing database tables"
   echo "========================================="
-  ./bin/rails db:prepare:all
+  ./bin/rails db:prepare
+  ./bin/rails db:create:queue 2>/dev/null; ./bin/rails db:migrate:queue
+  ./bin/rails db:create:cache 2>/dev/null; ./bin/rails db:migrate:cache
+  ./bin/rails db:create:cable 2>/dev/null; ./bin/rails db:migrate:cable
 
   if [ $? -eq 0 ]; then
     echo "✓ Database prepared successfully"
