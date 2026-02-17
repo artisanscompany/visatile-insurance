@@ -29,19 +29,22 @@ prepare_databases() {
   ./bin/rails db:prepare
   echo "✓ Primary database ready"
 
+  # For Solid databases, use schema:load which is idempotent and
+  # handles the case where migrations were recorded but tables
+  # were never actually created (corrupt/empty SQLite file).
   echo "→ Preparing queue database (SolidQueue)..."
   ./bin/rails db:create:queue 2>/dev/null || true
-  ./bin/rails db:migrate:queue
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:queue
   echo "✓ Queue database ready"
 
   echo "→ Preparing cache database (SolidCache)..."
   ./bin/rails db:create:cache 2>/dev/null || true
-  ./bin/rails db:migrate:cache
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:cache
   echo "✓ Cache database ready"
 
   echo "→ Preparing cable database (SolidCable)..."
   ./bin/rails db:create:cable 2>/dev/null || true
-  ./bin/rails db:migrate:cable
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:cable
   echo "✓ Cable database ready"
 
   echo "========================================="
