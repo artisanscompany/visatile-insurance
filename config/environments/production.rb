@@ -58,6 +58,7 @@ Rails.application.configure do
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue, reading: :queue } }
 
   # Configure email delivery via Postmark
   config.action_mailer.delivery_method = :postmark
