@@ -25,27 +25,45 @@ prepare_databases() {
   echo "PREPARING DATABASES"
   echo "========================================="
 
-  echo "→ Preparing primary database..."
+  echo "-> Preparing primary database..."
   ./bin/rails db:prepare
-  echo "✓ Primary database ready"
+  echo "   Primary database ready"
 
-  # For Solid databases, use schema:load which is idempotent and
-  # handles the case where migrations were recorded but tables
-  # were never actually created (corrupt/empty SQLite file).
-  echo "→ Preparing queue database (SolidQueue)..."
-  ./bin/rails db:create:queue 2>/dev/null || true
-  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:queue
-  echo "✓ Queue database ready"
+  # db:schema:load:queue is broken in Rails 8 with SQLite multi-database.
+  # The rake task silently fails to load schemas into the correct connection.
+  # Workaround: use Rails runner to establish each connection explicitly
+  # and load the schema file at the Ruby level.
+  # See: https://github.com/rails/solid_queue/issues/365
+  echo "-> Verifying Solid database schemas..."
+  ./bin/rails runner '
+    {queue: "db/queue_schema.rb", cache: "db/cache_schema.rb", cable: "db/cable_schema.rb"}.each do |name, schema|
+      schema_path = Rails.root.join(schema)
+      next unless File.exist?(schema_path)
 
-  echo "→ Preparing cache database (SolidCache)..."
-  ./bin/rails db:create:cache 2>/dev/null || true
-  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:cache
-  echo "✓ Cache database ready"
+      config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: name.to_s)
+      next unless config
 
-  echo "→ Preparing cable database (SolidCable)..."
-  ./bin/rails db:create:cable 2>/dev/null || true
-  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ./bin/rails db:schema:load:cable
-  echo "✓ Cable database ready"
+      ActiveRecord::Base.establish_connection(name)
+      tables = ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata]
+
+      if tables.empty?
+        puts "   LOAD #{name}: loading #{schema}..."
+        # Delete corrupt/empty SQLite file and reconnect
+        db_path = config.database
+        if db_path&.end_with?(".sqlite3") && File.exist?(db_path)
+          File.delete(db_path)
+          ActiveRecord::Base.establish_connection(name)
+        end
+        load(schema_path)
+        new_tables = ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata]
+        puts "   OK   #{name}: created #{new_tables.size} tables"
+      else
+        puts "   OK   #{name}: #{tables.size} tables exist"
+      end
+    end
+    ActiveRecord::Base.establish_connection(:primary)
+  '
+  echo "   All databases verified"
 
   echo "========================================="
 }
