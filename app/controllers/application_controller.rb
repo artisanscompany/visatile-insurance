@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  allow_browser versions: { safari: 15, chrome: 100, firefox: 100, opera: 90, ie: false }
+  # allow_browser versions: { safari: 15, chrome: 100, firefox: 100, opera: 90, ie: false }
 
   inertia_share do
     {
