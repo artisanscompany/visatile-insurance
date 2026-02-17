@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  allow_browser versions: { safari: 15, chrome: 100, firefox: 100, opera: 90, ie: false }
 
   inertia_share do
     {

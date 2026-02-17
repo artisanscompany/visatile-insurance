@@ -3,38 +3,31 @@ const team = [
     name: "Usman Sotunde",
     role: "Partner",
     email: "usman@cr4fts.com",
-    image: "/team/usman.jpg",
   },
   {
     name: "Abdulwaheed Yusuf",
     role: "Partner",
     email: "waheed@cr4fts.com",
-    image: "/team/waheed.jpg",
   },
   {
-    name: "Amara Okonkwo",
+    name: "Hiring",
     role: "Engineering",
-    image: "/team/amara.jpg",
   },
   {
-    name: "Kofi Mensah",
+    name: "Hiring",
     role: "Operations",
-    image: "/team/kofi.jpg",
   },
   {
-    name: "Fatima Bello",
+    name: "Hiring",
     role: "Investments",
-    image: "/team/fatima.jpg",
   },
   {
-    name: "Daniel Kamau",
+    name: "Hiring",
     role: "Makerspace Lead",
-    image: "/team/daniel.jpg",
   },
   {
-    name: "Zainab Mwangi",
+    name: "Hiring",
     role: "Community",
-    image: "/team/zainab.jpg",
   },
 ]
 
@@ -47,15 +40,10 @@ export default function Team() {
       </div>
 
       <div className="space-y-3">
-        {team.map((member) => (
-          <div key={member.name} className="flex items-center gap-3 group">
-            <img
-              src={member.image}
-              alt={member.name}
-              className="w-8 h-8 rounded-full object-cover bg-[#E3E2DE]"
-            />
+        {team.map((member, index) => (
+          <div key={index} className="flex items-center gap-2 group">
             <div className="flex items-center gap-2">
-              <span className="text-base font-semibold text-black">
+              <span className={`text-base font-semibold ${member.name === "Hiring" ? "text-[#9B9B9B] italic" : "text-black"}`}>
                 {member.name}
               </span>
               <span className="text-sm text-[#9B9B9B]">{member.role}</span>
