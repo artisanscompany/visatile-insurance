@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react'
 import { Loader2, Plus, Trash2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { FunnelLayout } from '@/components/layout/FunnelLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -20,6 +21,11 @@ const COVERAGE_TIERS: CoverageTierOption[] = [
 
 type QuoteNewProps = {
   coverage_tiers: Record<number, string>
+  prefill?: {
+    start_date: string
+    end_date: string
+    destination: string
+  }
 }
 
 type QuoteFormData = {
@@ -31,12 +37,12 @@ type QuoteFormData = {
   traveler_birth_dates: string[]
 }
 
-export default function QuoteNew({ coverage_tiers }: QuoteNewProps) {
+export default function QuoteNew({ coverage_tiers, prefill }: QuoteNewProps) {
   const { data, setData, post, processing, errors } = useForm<QuoteFormData>({
-    start_date: '',
-    end_date: '',
+    start_date: prefill?.start_date || '',
+    end_date: prefill?.end_date || '',
     departure_country: '',
-    destination_countries: '',
+    destination_countries: prefill?.destination || '',
     coverage_tier: 1,
     traveler_birth_dates: [''],
   })
@@ -159,11 +165,12 @@ export default function QuoteNew({ coverage_tiers }: QuoteNewProps) {
                       key={tier.id}
                       type="button"
                       onClick={() => setData('coverage_tier', tier.id)}
-                      className={`relative rounded-lg border-2 p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      className={cn(
+                        'relative rounded-lg border-2 p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                         isSelected
                           ? 'border-primary bg-primary/5'
                           : 'border-border hover:border-muted-foreground/50'
-                      }`}
+                      )}
                     >
                       <div className="font-semibold">{tierLabel}</div>
                       <div className="mt-1 text-sm text-muted-foreground">

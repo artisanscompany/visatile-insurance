@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { router, usePage } from '@inertiajs/react'
 import { Mail, Loader2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -117,7 +118,7 @@ export default function SessionsVerify({ email }: VerifyProps) {
             <CardContent>
               <div className="space-y-6">
                 <div
-                  className={`flex justify-center gap-2 sm:gap-3 ${shake ? 'animate-shake' : ''}`}
+                  className={cn('flex justify-center gap-2 sm:gap-3', shake && 'animate-shake')}
                   onPaste={handlePaste}
                   role="group"
                   aria-label="Verification code input"

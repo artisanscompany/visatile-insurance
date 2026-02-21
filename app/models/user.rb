@@ -11,18 +11,6 @@ class User < ApplicationRecord
 
   scope :alphabetically, -> { order(name: :asc) }
 
-  def owner?
-    role == "owner"
-  end
-
-  def admin?
-    role == "admin"
-  end
-
-  def member?
-    role == "member"
-  end
-
   def can_manage_members?
     admin? || owner?
   end

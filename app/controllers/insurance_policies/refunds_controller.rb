@@ -14,14 +14,7 @@ module InsurancePolicies
 
     def create
       policy = Current.account.insurance_policies.find(params[:insurance_policy_id])
-      payment = policy.payment_receiveds.order(created_at: :desc).first!
-
-      PolicyRefundInitiated.create!(
-        policy_id: policy.id,
-        stripe_payment_intent_id: payment.stripe_payment_intent_id,
-        reason: params.require(:reason),
-        initiated_by_id: Current.identity.id
-      )
+      policy.initiate_refund!(reason: params.require(:reason), identity: Current.identity)
 
       redirect_to insurance_policy_path(Current.account.slug, policy), notice: "Refund initiated."
     end

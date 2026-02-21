@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Redirect to localhost from 127.0.0.1 to use same IP address with Vite server
   constraints(host: "127.0.0.1") do
     get "(*path)", to: redirect { |params, req| "#{req.protocol}localhost:#{req.port}/#{params[:path]}" }
@@ -11,8 +10,7 @@ Rails.application.routes.draw do
   end
 
   resource :registration, only: %i[new create] do
-    get :complete, on: :member
-    post :finish, on: :member
+    resource :completion, only: %i[show create], module: :registrations
   end
 
   get "accounts/select", to: "account_selector#show", as: :account_selector
@@ -41,7 +39,7 @@ Rails.application.routes.draw do
     resource :profile, only: %i[edit update]
     resources :members, only: %i[index update destroy]
     resources :invites, only: %i[create destroy] do
-      post :resend, on: :member
+      resource :resend, only: %i[create], module: :invites
     end
 
     # Insurance policy views (authenticated, account-scoped)
@@ -69,6 +67,9 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  # Public landing page
+  resource :landing, only: [ :show ], controller: :landing
+
   # Defines the root path route ("/")
-  root "sessions#new"
+  root "landing#show"
 end

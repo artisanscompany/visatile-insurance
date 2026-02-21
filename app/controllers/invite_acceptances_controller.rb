@@ -55,15 +55,13 @@ class InviteAcceptancesController < InertiaController
     # Authenticated with correct identity - accept the invite
     name = params.require(:name)
 
-    if @invite.accept!(identity: Current.identity, user_name: name)
-      # Clear any pending invite token
-      session.delete(:pending_invite_token)
+    @invite.accept!(identity: Current.identity, user_name: name)
 
-      # Redirect to the new workspace
-      redirect_to "/#{@invite.account.slug}/dashboard", notice: "Welcome to #{@invite.account.name}!"
-    else
-      redirect_to invite_path(@invite.token), alert: "Failed to accept invitation."
-    end
+    # Clear any pending invite token
+    session.delete(:pending_invite_token)
+
+    # Redirect to the new workspace
+    redirect_to "/#{@invite.account.slug}/dashboard", notice: "Welcome to #{@invite.account.name}!"
   end
 
   private

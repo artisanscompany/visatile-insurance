@@ -32,20 +32,7 @@ module Stripe
       policy_id = session.metadata["policy_id"]
       return unless policy_id
 
-      policy = InsurancePolicy.find(policy_id)
-
-      # Idempotency: skip if already processed for this checkout session
-      return if PolicyPaymentReceived.exists?(policy_id: policy_id, stripe_checkout_session_id: session.id)
-
-      PolicyPaymentReceived.create!(
-        policy_id: policy_id,
-        stripe_payment_intent_id: session.payment_intent,
-        stripe_checkout_session_id: session.id,
-        amount_received: session.amount_total / 100.0,
-        currency: session.currency.upcase
-      )
-
-      policy.fulfill_later
+      InsurancePolicy.find(policy_id).record_payment!(session)
     end
   end
 end

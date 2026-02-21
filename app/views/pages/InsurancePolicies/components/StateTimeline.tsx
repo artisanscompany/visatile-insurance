@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { PolicyStateEntry } from '@/types'
 
 type StateTimelineProps = {
@@ -56,7 +57,7 @@ export function StateTimeline({ entries }: StateTimelineProps) {
 
             {/* Dot */}
             <div className="relative z-10 mt-1.5 flex shrink-0">
-              <div className={`h-[15px] w-[15px] rounded-full ${dotColor} ring-4 ring-background`} />
+              <div className={cn('h-[15px] w-[15px] rounded-full ring-4 ring-background', dotColor)} />
             </div>
 
             {/* Content */}

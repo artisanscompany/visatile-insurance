@@ -33,7 +33,7 @@ module PolicyFulfillable
   private
 
   def create_contract!(client)
-    result = client.add_contract(self, travelers)
+    result = client.add_contract(self, travelers, tariff_id: coverage_tier)
     PolicyContractCreated.create!(
       policy_id: id,
       insurs_order_id: result["order_id"].to_s,

@@ -34,7 +34,7 @@ class Invite < ApplicationRecord
   end
 
   def accept!(identity:, user_name:)
-    return false unless pending?
+    raise ActiveRecord::RecordInvalid.new(self), "Invite is not pending" unless pending?
 
     transaction do
       update!(accepted_at: Time.current)

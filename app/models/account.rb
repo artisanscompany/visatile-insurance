@@ -58,7 +58,16 @@ class Account < ApplicationRecord
   def generate_slug
     return if slug.present?
 
-    self.slug = name.parameterize
+    base_slug = name.parameterize
+    candidate = base_slug
+
+    counter = 1
+    while Account.exists?(slug: candidate)
+      counter += 1
+      candidate = "#{base_slug}-#{counter}"
+    end
+
+    self.slug = candidate
   end
 
   # Override save to handle slug conflicts at database level (prevents race conditions)

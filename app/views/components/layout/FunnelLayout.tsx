@@ -15,7 +15,7 @@ export function FunnelLayout({ children, title, currentStep }: FunnelLayoutProps
 
   return (
     <>
-      <Head title={title || 'Visatile Insurance'} />
+      <Head title={title || 'TravelShield'} />
 
       <div className="min-h-screen bg-background">
         <header className="border-b bg-card">
@@ -24,7 +24,7 @@ export function FunnelLayout({ children, title, currentStep }: FunnelLayoutProps
               href="/"
               className="text-lg font-semibold tracking-tight text-foreground hover:text-foreground/80 transition-colors"
             >
-              Visatile Insurance
+              TravelShield
             </a>
           </div>
         </header>
@@ -37,7 +37,7 @@ export function FunnelLayout({ children, title, currentStep }: FunnelLayoutProps
           {(flash.notice || flash.alert) && (
             <div className="mb-6">
               {flash.notice && (
-                <div className="rounded-md bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3 text-sm text-green-700 dark:text-green-300">
+                <div className="rounded-md bg-primary/10 border border-primary/20 p-3 text-sm text-primary">
                   {flash.notice}
                 </div>
               )}

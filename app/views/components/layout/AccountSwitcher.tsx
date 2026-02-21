@@ -84,7 +84,7 @@ export function AccountSwitcher() {
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="gap-2 p-2">
-              <a href="/registration/complete">
+              <a href="/registration/completion">
                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                   <Plus className="size-4" />
                 </div>

@@ -42,7 +42,7 @@ export default function AccountsSelector({ accounts }: SelectorProps) {
                   </div>
                   <p className="text-muted-foreground mb-4">Create your first workspace to get started</p>
                   <Button asChild>
-                    <a href="/registration/complete">Create workspace</a>
+                    <a href="/registration/completion">Create workspace</a>
                   </Button>
                 </div>
               ) : (

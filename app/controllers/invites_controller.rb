@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class InvitesController < AccountInertiaController
-  rate_limit to: 5, within: 1.hour, only: %i[create resend],
+  rate_limit to: 5, within: 1.hour, only: :create,
     with: -> { redirect_to members_path, alert: "Too many invitations. Try again later." }
 
   before_action :require_manage_permission
-  before_action :set_invite, only: %i[destroy resend]
+  before_action :set_invite, only: :destroy
 
   def create
     email = invite_params[:email]&.strip&.downcase
@@ -48,15 +48,6 @@ class InvitesController < AccountInertiaController
   def destroy
     @invite.destroy!
     redirect_to members_path, notice: "Invitation to #{@invite.email} has been cancelled."
-  end
-
-  def resend
-    if @invite.expired?
-      @invite.update!(expires_at: Invite::EXPIRATION_PERIOD.from_now)
-    end
-
-    InviteMailer.invitation(@invite).deliver_later
-    redirect_to members_path, notice: "Invitation resent to #{@invite.email}."
   end
 
   private

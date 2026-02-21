@@ -38,7 +38,7 @@ module Sessions
 
     def after_sign_in_url(magic_link)
       if magic_link.for_sign_up?
-        complete_registration_path
+        registration_completion_path
       elsif session[:pending_invite_token].present?
         invite_path(session[:pending_invite_token])
       else
