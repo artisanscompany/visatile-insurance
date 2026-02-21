@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .code-box {
+      background-color: #f5f5f5;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .code {
+      font-size: 36px;
+      font-weight: bold;
+      letter-spacing: 8px;
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      color: #000;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sign in to Assetmaker</h2>
+
+  <p>Hello,</p>
+
+  <p>Use this code to sign in to your account:</p>
+
+  <div class="code-box">
+    <span class="code"><%= @code %></span>
+  </div>
+
+  <p>This code will expire in 15 minutes.</p>
+
+  <p>If you didn't request this code, you can safely ignore this email.</p>
+
+  <div class="footer">
+    <p>This email was sent to <%= @identity.email_address %></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+You're invited to join a workspace
+===================================
+
+Hello,
+
+<%= @inviter.name %> has invited you to join their workspace on Assetmaker.
+
+Workspace: <%= @account.name %>
+Role: <%= @invite.role.capitalize %>
+
+Accept the invitation by visiting this link:
+<%= @accept_url %>
+
+This invitation will expire in 7 days.
+
+---
+This invitation was sent to <%= @invite.email %>
+If you don't want to join this workspace, you can safely ignore this email.

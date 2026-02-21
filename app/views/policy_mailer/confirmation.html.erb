@@ -1,0 +1,18 @@
+<h1>Your Travel Insurance Policy is Confirmed</h1>
+
+<p>Hello,</p>
+
+<p>Your travel insurance policy has been successfully created and confirmed.</p>
+
+<h2>Policy Details</h2>
+<ul>
+  <li><strong>Travel Dates:</strong> <%= @policy.start_date.strftime("%B %d, %Y") %> – <%= @policy.end_date.strftime("%B %d, %Y") %></li>
+  <li><strong>Coverage:</strong> <%= @policy.coverage_label %> ($<%= number_with_delimiter(@policy.coverage_amount) %>)</li>
+  <li><strong>Departure:</strong> <%= @policy.departure_country %></li>
+  <li><strong>Destination:</strong> <%= @policy.destination_countries.join(", ") %></li>
+  <li><strong>Price:</strong> <%= @policy.price_currency %> <%= @policy.price_amount %></li>
+</ul>
+
+<p>You can sign in to view your policy and download your certificate.</p>
+
+<p>Thank you for choosing Visatile Insurance.</p>
