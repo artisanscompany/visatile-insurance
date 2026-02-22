@@ -8,12 +8,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import type { QuoteRequest, QuoteResponse, TravelerData } from '@/types'
+import { COVERAGE_LABELS } from '@/data/coverage'
+import { COUNTRIES } from '@/data/countries'
+import { LOCALITY_COVERAGES } from '@/data/localities'
+import { TRAVEL_TYPE_MAP } from '@/data/travel-types'
 
-const COVERAGE_LABELS: Record<number, string> = {
-  1: 'Standard',
-  2: 'Advanced',
-  3: 'Premium',
-}
+const COUNTRY_MAP: Record<string, string> = Object.fromEntries(
+  COUNTRIES.map(c => [c.code, c.name])
+)
+
+const LOCALITY_MAP: Record<number, string> = Object.fromEntries(
+  LOCALITY_COVERAGES.map(l => [l.id, l.name])
+)
 
 type CheckoutNewProps = {
   quote_request: QuoteRequest
@@ -44,6 +50,11 @@ export default function CheckoutNew({
   }
 
   const coverageLabel = COVERAGE_LABELS[quote_response.coverage_tier] || 'Unknown'
+  const departureDisplay = COUNTRY_MAP[quote_request.departure_country] || quote_request.departure_country
+  const localityCoverage = quote_response.locality_coverage || (quote_request as Record<string, unknown>).locality_coverage as number
+  const destinationDisplay = localityCoverage ? (LOCALITY_MAP[localityCoverage] || `Region ${localityCoverage}`) : quote_request.destination_countries.join(', ')
+  const travelType = (quote_request as Record<string, unknown>).type_of_travel as number | undefined
+  const travelTypeDisplay = travelType ? (TRAVEL_TYPE_MAP[travelType] || '') : ''
 
   return (
     <FunnelLayout title="Checkout" currentStep={3}>
@@ -69,13 +80,20 @@ export default function CheckoutNew({
 
             <div className="flex justify-between">
               <span className="text-muted-foreground">Departure</span>
-              <span className="font-medium">{quote_request.departure_country}</span>
+              <span className="font-medium">{departureDisplay}</span>
             </div>
 
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Destinations</span>
-              <span className="font-medium">{quote_request.destination_countries.join(', ')}</span>
+              <span className="text-muted-foreground">Destination</span>
+              <span className="font-medium">{destinationDisplay}</span>
             </div>
+
+            {travelTypeDisplay && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Travel Type</span>
+                <span className="font-medium">{travelTypeDisplay}</span>
+              </div>
+            )}
 
             <div className="flex justify-between">
               <span className="text-muted-foreground">Coverage</span>

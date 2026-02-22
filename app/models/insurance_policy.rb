@@ -15,12 +15,12 @@ class InsurancePolicy < ApplicationRecord
   has_many :refund_initiateds, class_name: "PolicyRefundInitiated", foreign_key: :policy_id, dependent: :destroy
   has_many :refundeds, class_name: "PolicyRefunded", foreign_key: :policy_id, dependent: :destroy
 
-  COVERAGE_AMOUNTS = { 1 => 35_000, 2 => 100_000, 3 => 500_000 }.freeze
-  COVERAGE_LABELS = { 1 => "Standard", 2 => "Advanced", 3 => "Premium" }.freeze
+  COVERAGE_AMOUNTS = { 1 => 35_000, 2 => 100_000, 3 => 500_000, 4 => 1_000_000 }.freeze
+  COVERAGE_LABELS = { 1 => "Standard", 2 => "Advanced", 3 => "Premium", 4 => "Ultimate" }.freeze
 
   scope :recently_created, -> { order(created_at: :desc) }
 
-  def self.purchase!(email:, quote_request:, quote_response:, travelers_data:, request_base_url:)
+  def self.purchase!(email:, quote_request:, quote_response:, travelers_data:, request_base_url:, panel_mode: false)
     identity = Identity.find_or_create_by!(email_address: email)
     account = identity.accounts.first || Account.create_individual_for(
       identity: identity,
@@ -36,10 +36,23 @@ class InsurancePolicy < ApplicationRecord
       locality_coverage: quote_response["locality_coverage"] || 237,
       coverage_tier: quote_request["coverage_tier"].to_i,
       price_amount: quote_response["price_amount"],
-      price_currency: quote_response["price_currency"] || "USD"
+      price_currency: quote_response["price_currency"] || "USD",
+      type_of_travel: quote_request["type_of_travel"]&.to_i || 1
     )
 
     travelers_data.each { |t| policy.travelers.create!(t.symbolize_keys) }
+
+    success_url = if panel_mode
+      "#{request_base_url}/?panel=confirmation&session_id={CHECKOUT_SESSION_ID}&policy_id=#{policy.id}"
+    else
+      "#{request_base_url}/insurance/confirmation?session_id={CHECKOUT_SESSION_ID}&policy_id=#{policy.id}"
+    end
+
+    cancel_url = if panel_mode
+      "#{request_base_url}/?panel=quote"
+    else
+      "#{request_base_url}/insurance/checkout/new"
+    end
 
     stripe_session = ::Stripe::Checkout::Session.create(
       payment_method_types: [ "card" ],
@@ -54,8 +67,8 @@ class InsurancePolicy < ApplicationRecord
         quantity: 1
       } ],
       metadata: { policy_id: policy.id },
-      success_url: "#{request_base_url}/insurance/confirmation?session_id={CHECKOUT_SESSION_ID}&policy_id=#{policy.id}",
-      cancel_url: "#{request_base_url}/insurance/checkout/new"
+      success_url: success_url,
+      cancel_url: cancel_url
     )
 
     policy.pending_payments.create!(stripe_checkout_session_id: stripe_session.id)

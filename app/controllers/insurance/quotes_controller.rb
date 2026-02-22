@@ -16,7 +16,11 @@ module Insurance
     def create
       client = InsursClient.new
       normalized = normalize_quote_params
-      result = client.get_price(**normalized.symbolize_keys)
+      price_params = normalized.symbolize_keys.slice(
+        :start_date, :end_date, :departure_country, :destination_countries,
+        :coverage_tier, :traveler_birth_dates, :locality_coverage, :type_of_travel
+      ).compact
+      result = client.get_price(**price_params)
       tariff = result["data"].first
 
       insurance_session["quote_request"] = normalized
@@ -29,7 +33,7 @@ module Insurance
         "start_date" => normalized["start_date"],
         "end_date" => normalized["end_date"],
         "traveler_count" => normalized["traveler_birth_dates"].size,
-        "locality_coverage" => 237
+        "locality_coverage" => (normalized["locality_coverage"] || 237).to_i
       }
 
       redirect_to insurance_quote_review_path
@@ -42,6 +46,7 @@ module Insurance
     def quote_params
       params.require(:quote).permit(
         :start_date, :end_date, :departure_country, :destination_countries, :coverage_tier,
+        :locality_coverage, :type_of_travel,
         destination_countries: [], traveler_birth_dates: []
       )
     end

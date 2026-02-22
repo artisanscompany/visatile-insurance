@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_22_141728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -35,7 +35,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
     t.index ["slug"], name: "index_accounts_on_slug", unique: true
   end
 
-  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
+  create_table "action_mailbox_inbound_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "message_checksum", null: false
     t.string "message_id", null: false
@@ -982,6 +982,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
     t.index ["user_id"], name: "index_chat_bookmarks_on_user_id"
   end
 
+  create_table "chat_conversation_default_channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "chat_conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.uuid "marked_by_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_conversation_id"], name: "idx_on_chat_conversation_id_fe7928ae3b", unique: true
+    t.index ["marked_by_id"], name: "index_chat_conversation_default_channels_on_marked_by_id"
+  end
+
   create_table "chat_conversations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.string "conversation_type", null: false
@@ -1718,6 +1727,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
     t.string "dkim_host"
     t.string "dkim_value"
     t.boolean "dkim_verified", default: false
+    t.integer "email_accounts_count", default: 0, null: false
     t.string "name", null: false
     t.integer "postmark_domain_id"
     t.string "return_path_cname_value"
@@ -1794,6 +1804,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
     t.uuid "parent_id"
     t.string "postmark_message_id"
     t.datetime "received_at"
+    t.integer "replies_count", default: 0, null: false
     t.datetime "sent_at"
     t.string "status", default: "draft", null: false
     t.string "subject"
@@ -2303,9 +2314,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
     t.decimal "price_amount", precision: 10, scale: 2, null: false
     t.string "price_currency", limit: 3, default: "USD", null: false
     t.date "start_date", null: false
+    t.integer "type_of_travel", default: 1, null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_insurance_policies_on_account_id"
-    t.check_constraint "coverage_tier >= 1 AND coverage_tier <= 3", name: "chk_coverage_tier"
+    t.check_constraint "coverage_tier >= 1 AND coverage_tier <= 4", name: "chk_coverage_tier"
   end
 
   create_table "invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -4402,6 +4414,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_142548) do
   add_foreign_key "calendar_trash_items", "users", column: "trashed_by_id"
   add_foreign_key "chat_bookmarks", "chat_messages"
   add_foreign_key "chat_bookmarks", "users"
+  add_foreign_key "chat_conversation_default_channels", "chat_conversations"
+  add_foreign_key "chat_conversation_default_channels", "users", column: "marked_by_id"
   add_foreign_key "chat_conversations", "accounts"
   add_foreign_key "chat_conversations", "users", column: "created_by_id"
   add_foreign_key "chat_memberships", "chat_conversations"

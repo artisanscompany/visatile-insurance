@@ -19,6 +19,18 @@ Rails.application.routes.draw do
   get "invites/:token", to: "invite_acceptances#show", as: :invite
   post "invites/:token/accept", to: "invite_acceptances#create", as: :accept_invite
 
+  # Panel API endpoints (JSON, no session state)
+  namespace :api do
+    namespace :insurance do
+      resource :quote, only: %i[create]
+      resource :checkout, only: %i[create]
+      get "pdf_download/:policy_id", to: "pdf_downloads#show", as: :insurance_pdf_download
+    end
+    resource :session, only: %i[create] do
+      resource :magic_link, only: %i[create], module: :sessions
+    end
+  end
+
   # Public insurance funnel (no auth required)
   namespace :insurance do
     resource :quote, only: %i[new create]

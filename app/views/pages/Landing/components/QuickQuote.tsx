@@ -34,7 +34,7 @@ export function QuickQuote() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-white/20 p-7 w-full">
-      <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-violet-600 mb-1">Instant quote</p>
+      <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-yellow-600 mb-1">Instant quote</p>
       <h3 className="text-xl font-black text-black mb-6 leading-tight">Where are you headed?</h3>
 
       <div className="space-y-4">
@@ -50,7 +50,7 @@ export function QuickQuote() {
               onChange={e => handleChange('start_date', e.target.value)}
               min={today}
               required
-              className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-violet-500 focus-visible:border-violet-500"
+              className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-yellow-500 focus-visible:border-yellow-500"
             />
           </div>
 
@@ -65,7 +65,7 @@ export function QuickQuote() {
               onChange={e => handleChange('end_date', e.target.value)}
               min={formData.start_date || today}
               required
-              className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-violet-500 focus-visible:border-violet-500"
+              className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-yellow-500 focus-visible:border-yellow-500"
             />
           </div>
         </div>
@@ -81,13 +81,13 @@ export function QuickQuote() {
             value={formData.destination}
             onChange={e => handleChange('destination', e.target.value.toUpperCase())}
             required
-            className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-violet-500 focus-visible:border-violet-500"
+            className="h-11 border-gray-200 text-sm rounded-xl focus-visible:ring-yellow-500 focus-visible:border-yellow-500"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full h-12 bg-black hover:bg-violet-600 text-white font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2"
+          className="w-full h-12 bg-black hover:bg-yellow-400 text-white hover:text-black font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2"
         >
           Get My Quote
           <ArrowRight className="w-4 h-4" />

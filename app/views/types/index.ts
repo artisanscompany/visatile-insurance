@@ -96,7 +96,7 @@ export type PageProps<T = Record<string, unknown>> = SharedProps & T
 export type DashboardPageProps<T = Record<string, unknown>> = DashboardSharedProps & T
 
 // Insurance types
-export type CoverageTier = 1 | 2 | 3
+export type CoverageTier = 1 | 2 | 3 | 4
 
 export type QuoteRequest = {
   start_date: string
@@ -105,6 +105,8 @@ export type QuoteRequest = {
   destination_countries: string[]
   coverage_tier: CoverageTier
   traveler_birth_dates: string[]
+  locality_coverage: number
+  type_of_travel: number
 }
 
 export type QuoteResponse = {

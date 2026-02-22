@@ -1,23 +1,17 @@
 import { useForm } from '@inertiajs/react'
-import { Loader2, Plus, Trash2 } from 'lucide-react'
+import { Loader2, Plus, Trash2, Plane } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FunnelLayout } from '@/components/layout/FunnelLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-type CoverageTierOption = {
-  id: number
-  label: string
-  limit: string
-}
-
-const COVERAGE_TIERS: CoverageTierOption[] = [
-  { id: 1, label: 'Standard', limit: '$35,000' },
-  { id: 2, label: 'Advanced', limit: '$100,000' },
-  { id: 3, label: 'Premium', limit: '$500,000' },
-]
+import { SearchableSelect, type SearchableSelectOption } from '@/components/ui/searchable-select'
+import { COUNTRIES } from '@/data/countries'
+import { LOCALITY_COVERAGES } from '@/data/localities'
+import { TRAVEL_TYPES } from '@/data/travel-types'
+import { COVERAGE_TIERS } from '@/data/coverage'
+import { useMemo } from 'react'
 
 type QuoteNewProps = {
   coverage_tiers: Record<number, string>
@@ -35,6 +29,8 @@ type QuoteFormData = {
   destination_countries: string
   coverage_tier: number
   traveler_birth_dates: string[]
+  locality_coverage: number
+  type_of_travel: number
 }
 
 export default function QuoteNew({ coverage_tiers, prefill }: QuoteNewProps) {
@@ -45,7 +41,19 @@ export default function QuoteNew({ coverage_tiers, prefill }: QuoteNewProps) {
     destination_countries: prefill?.destination || '',
     coverage_tier: 1,
     traveler_birth_dates: [''],
+    locality_coverage: 207,
+    type_of_travel: 1,
   })
+
+  const countryOptions: SearchableSelectOption[] = useMemo(
+    () => COUNTRIES.map(c => ({ value: c.code, label: `${c.name} (${c.code})` })),
+    []
+  )
+
+  const localityOptions: SearchableSelectOption[] = useMemo(
+    () => LOCALITY_COVERAGES.map(l => ({ value: String(l.id), label: l.name })),
+    []
+  )
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -115,33 +123,28 @@ export default function QuoteNew({ coverage_tiers, prefill }: QuoteNewProps) {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="departure_country">Departure Country</Label>
-                  <Input
-                    id="departure_country"
-                    type="text"
-                    placeholder="US"
-                    maxLength={2}
+                  <Label>Departure Country</Label>
+                  <SearchableSelect
                     value={data.departure_country}
-                    onChange={e => setData('departure_country', e.target.value.toUpperCase())}
-                    required
+                    onValueChange={v => setData('departure_country', v)}
+                    options={countryOptions}
+                    placeholder="Select country..."
+                    searchPlaceholder="Search countries..."
                   />
-                  <p className="text-xs text-muted-foreground">ISO alpha-2 code (e.g. US, GB, DE)</p>
                   {errors.departure_country && (
                     <p className="text-sm text-destructive">{errors.departure_country}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="destination_countries">Destination Countries</Label>
-                  <Input
-                    id="destination_countries"
-                    type="text"
-                    placeholder="FR, IT, ES"
-                    value={data.destination_countries}
-                    onChange={e => setData('destination_countries', e.target.value.toUpperCase())}
-                    required
+                  <Label>Destination / Coverage Region</Label>
+                  <SearchableSelect
+                    value={String(data.locality_coverage)}
+                    onValueChange={v => setData('locality_coverage', Number(v))}
+                    options={localityOptions}
+                    placeholder="Select destination..."
+                    searchPlaceholder="Search destinations..."
                   />
-                  <p className="text-xs text-muted-foreground">Comma-separated ISO alpha-2 codes</p>
                   {errors.destination_countries && (
                     <p className="text-sm text-destructive">{errors.destination_countries}</p>
                   )}
@@ -152,10 +155,45 @@ export default function QuoteNew({ coverage_tiers, prefill }: QuoteNewProps) {
 
           <Card>
             <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Plane className="h-5 w-5" />
+                Travel Type
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3 sm:grid-cols-4">
+                {TRAVEL_TYPES.map(tt => {
+                  const isSelected = data.type_of_travel === tt.id
+                  return (
+                    <button
+                      key={tt.id}
+                      type="button"
+                      onClick={() => setData('type_of_travel', tt.id)}
+                      className={cn(
+                        'relative rounded-lg border-2 p-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                        isSelected
+                          ? 'border-primary bg-primary/5'
+                          : 'border-border hover:border-muted-foreground/50'
+                      )}
+                    >
+                      <div className="font-semibold text-sm">{tt.label}</div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">{tt.description}</div>
+                      {isSelected && (
+                        <div className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-primary" />
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>Coverage Tier</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-4">
                 {COVERAGE_TIERS.map(tier => {
                   const isSelected = data.coverage_tier === tier.id
                   const tierLabel = coverage_tiers[tier.id] || tier.label

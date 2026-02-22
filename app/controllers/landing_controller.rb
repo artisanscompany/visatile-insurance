@@ -4,17 +4,19 @@ class LandingController < ApplicationController
 
   def show
     render inertia: "Landing/Show", props: {
-      coverage_tiers: coverage_tiers
+      coverage_tiers: coverage_tiers,
+      panel: params[:panel],
+      panel_params: {
+        policy_id: params[:policy_id],
+        session_id: params[:session_id],
+        code: params[:code]
+      }.compact
     }
   end
 
   private
 
   def coverage_tiers
-    {
-      1 => "Standard",
-      2 => "Advanced",
-      3 => "Premium"
-    }
+    InsurancePolicy::COVERAGE_LABELS
   end
 end

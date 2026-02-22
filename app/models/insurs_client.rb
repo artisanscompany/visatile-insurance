@@ -5,8 +5,8 @@ class InsursClient
   PRODUCT_ID = 1
   COMPANY_ID = 366
   FRANCHISE_ID = 1
-  COVERAGE_TIERS = { 1 => 1, 2 => 2, 3 => 3 }.freeze
-  COVERAGE_AMOUNTS = { 1 => 35_000, 2 => 100_000, 3 => 500_000 }.freeze
+  COVERAGE_TIERS = { 1 => 1, 2 => 2, 3 => 3, 4 => 4 }.freeze
+  COVERAGE_AMOUNTS = { 1 => 35_000, 2 => 100_000, 3 => 500_000, 4 => 1_000_000 }.freeze
 
   class ApiError < StandardError; end
 
@@ -30,20 +30,21 @@ class InsursClient
     end
   end
 
-  def get_price(start_date:, end_date:, departure_country:, destination_countries:, coverage_tier:, traveler_birth_dates:)
+  def get_price(start_date:, end_date:, departure_country:, destination_countries: [], coverage_tier:, traveler_birth_dates:, locality_coverage: 237, type_of_travel: 1)
+    arrive_country = destination_countries&.first.presence || departure_country
     post("services/api/get_price", {
       product_id: PRODUCT_ID,
       company_id: COMPANY_ID,
       country_of_departure: departure_country,
-      country_of_arrive: destination_countries.first,
-      locality_coverage: [ 237 ],
+      country_of_arrive: arrive_country,
+      locality_coverage: [ locality_coverage.to_i ],
       additional_services: [ 0 ],
       params: {
         date_from: start_date,
         date_to: end_date,
         coverage_id: coverage_tier.to_i,
         franchise_id: FRANCHISE_ID,
-        type_of_travel: 1,
+        type_of_travel: type_of_travel.to_i,
         currency: "USD",
         tourists: traveler_birth_dates.map { |bd| { date_birth: bd } }
       }
@@ -60,7 +61,7 @@ class InsursClient
       company_id: COMPANY_ID,
       tariff_id: tariff_id || policy.coverage_tier,
       country_of_departure: policy.departure_country,
-      country_of_arrive: policy.destination_countries.first,
+      country_of_arrive: policy.destination_countries&.first.presence || policy.departure_country,
       locality_coverage: [ policy.locality_coverage ],
       insurer: {
         first_name: first_traveler.first_name.upcase,
@@ -83,6 +84,7 @@ class InsursClient
         date_to: policy.end_date.iso8601,
         coverage_id: policy.coverage_tier,
         franchise_id: FRANCHISE_ID,
+        type_of_travel: policy.type_of_travel || 1,
         currency: "USD"
       }
     })

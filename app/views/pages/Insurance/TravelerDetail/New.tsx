@@ -1,11 +1,14 @@
 import { useForm } from '@inertiajs/react'
 import { Loader2, User } from 'lucide-react'
+import { useMemo } from 'react'
 import { FunnelLayout } from '@/components/layout/FunnelLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { SearchableSelect } from '@/components/ui/searchable-select'
+import { COUNTRIES } from '@/data/countries'
 import type { TravelerData } from '@/types'
 
 type TravelerDetailNewProps = {
@@ -27,6 +30,10 @@ export default function TravelerDetailNew({
   traveler_birth_dates,
   saved_travelers,
 }: TravelerDetailNewProps) {
+  const countryOptions = useMemo(
+    () => COUNTRIES.map(c => ({ value: c.code, label: `${c.name} (${c.code})` })),
+    []
+  )
   const initialTravelers: TravelerFormEntry[] = Array.from(
     { length: traveler_count },
     (_, index) => {
@@ -151,17 +158,14 @@ export default function TravelerDetailNew({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor={`travelers_${index}_passport_country`}>Passport Country</Label>
-                    <Input
-                      id={`travelers_${index}_passport_country`}
-                      type="text"
-                      placeholder="US"
-                      maxLength={2}
+                    <Label>Passport Country</Label>
+                    <SearchableSelect
                       value={traveler.passport_country}
-                      onChange={e => updateTraveler(index, 'passport_country', e.target.value.toUpperCase())}
-                      required
+                      onValueChange={v => updateTraveler(index, 'passport_country', v)}
+                      options={countryOptions}
+                      placeholder="Select country..."
+                      searchPlaceholder="Search countries..."
                     />
-                    <p className="text-xs text-muted-foreground">ISO alpha-2 code</p>
                     {getError(index, 'passport_country') && (
                       <p className="text-sm text-destructive">{getError(index, 'passport_country')}</p>
                     )}
