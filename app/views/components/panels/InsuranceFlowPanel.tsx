@@ -10,6 +10,7 @@ import { ConfirmationPanel } from './ConfirmationPanel'
 type InsuranceFlowPanelProps = {
   open: boolean
   onClose: () => void
+  prefill?: Record<string, string>
 }
 
 function FlowContent({ onClose }: { onClose: () => void }) {
@@ -44,11 +45,11 @@ function FlowContent({ onClose }: { onClose: () => void }) {
   )
 }
 
-export function InsuranceFlowPanel({ open, onClose }: InsuranceFlowPanelProps) {
+export function InsuranceFlowPanel({ open, onClose, prefill }: InsuranceFlowPanelProps) {
   if (!open) return null
 
   return (
-    <InsuranceFlowProvider>
+    <InsuranceFlowProvider prefill={prefill}>
       <FlowContent onClose={onClose} />
     </InsuranceFlowProvider>
   )

@@ -17,6 +17,8 @@ import {
   Tent,
   Sailboat,
   CheckCircle2,
+  FileText,
+  Banknote,
 } from 'lucide-react'
 import { useState } from 'react'
 import { PanelProvider, usePanel } from '@/contexts/PanelContext'
@@ -88,34 +90,38 @@ const DESTINATIONS = [
     countries: '40+ countries',
     image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&q=85',
     highlight: 'Schengen & beyond',
+    localityId: 208,
   },
   {
     name: 'Asia Pacific',
     countries: '25+ countries',
     image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900&q=85',
     highlight: 'From Bali to Tokyo',
+    localityId: 207,
   },
   {
     name: 'The Americas',
     countries: '35+ countries',
     image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=900&q=85',
     highlight: 'North to South',
+    localityId: 207,
   },
   {
     name: 'Africa & Middle East',
     countries: '30+ countries',
     image: 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=900&q=85',
     highlight: 'Wild & wonderful',
+    localityId: 207,
   },
 ]
 
 const ACTIVITIES = [
-  { name: 'Beach & Water Sports', icon: Waves, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=85' },
-  { name: 'Hiking & Trekking', icon: Mountain, image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=700&q=85' },
-  { name: 'Winter Sports', icon: Mountain, image: 'https://images.unsplash.com/photo-1551524559-8af4e6624178?w=700&q=85' },
-  { name: 'Cycling Tours', icon: Bike, image: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=700&q=85' },
-  { name: 'Sailing & Boating', icon: Sailboat, image: 'https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=700&q=85' },
-  { name: 'Camping & Outdoor', icon: Tent, image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=85' },
+  { name: 'Beach & Water Sports', icon: Waves, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=85', travelTypeId: 2 },
+  { name: 'Hiking & Trekking', icon: Mountain, image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=700&q=85', travelTypeId: 2 },
+  { name: 'Winter Sports', icon: Mountain, image: 'https://images.unsplash.com/photo-1551524559-8af4e6624178?w=700&q=85', travelTypeId: 3 },
+  { name: 'Cycling Tours', icon: Bike, image: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=700&q=85', travelTypeId: 2 },
+  { name: 'Sailing & Boating', icon: Sailboat, image: 'https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=700&q=85', travelTypeId: 2 },
+  { name: 'Camping & Outdoor', icon: Tent, image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=85', travelTypeId: 2 },
 ]
 
 const TESTIMONIALS = [
@@ -130,7 +136,7 @@ const TESTIMONIALS = [
     name: 'James & Emma',
     location: 'Maldives',
     avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=100&q=80',
-    text: 'Our honeymoon got disrupted by a storm. TravelShield sorted us out within 24 hours. Absolute lifesavers.',
+    text: 'Our honeymoon got disrupted by a storm. TravelsKit sorted us out within 24 hours. Absolute lifesavers.',
     rating: 5,
   },
   {
@@ -163,7 +169,7 @@ function LandingContent() {
 
   return (
     <>
-      <Head title="TravelShield — Travel Insurance Made Simple" />
+      <Head title="TravelsKit — Travel Insurance Made Simple" />
 
       <div className="min-h-screen bg-[#fafaf8] font-sans scroll-smooth">
 
@@ -175,11 +181,11 @@ function LandingContent() {
                 <div className="w-8 h-8 sm:w-9 sm:h-9 bg-black rounded-xl flex items-center justify-center group-hover:bg-yellow-400 transition-colors">
                   <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:text-black transition-colors" />
                 </div>
-                <span className="text-base sm:text-[1.1rem] font-bold tracking-tight text-black">TravelShield</span>
+                <span className="text-base sm:text-[1.1rem] font-bold tracking-tight text-black">TravelsKit</span>
               </a>
 
               <nav className="hidden md:flex items-center gap-5 lg:gap-7">
-                {['Coverage', 'Destinations', 'Activities'].map(item => (
+                {['Coverage', 'Destinations', 'Activities', 'Claims'].map(item => (
                   <a
                     key={item}
                     href={`#${item.toLowerCase()}`}
@@ -208,7 +214,7 @@ function LandingContent() {
 
           {mobileMenuOpen && (
             <div className="md:hidden bg-[#fafaf8] border-t border-black/8 px-4 py-4 space-y-1">
-              {['Coverage', 'Destinations', 'Activities'].map(item => (
+              {['Coverage', 'Destinations', 'Activities', 'Claims'].map(item => (
                 <a key={item} href={`#${item.toLowerCase()}`} className="block py-2.5 text-sm font-medium text-gray-700">
                   {item}
                 </a>
@@ -411,7 +417,7 @@ function LandingContent() {
             {/* Bold grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_320px] gap-3 sm:gap-4">
               {/* First large card */}
-              <div className="group relative rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-auto cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
+              <div onClick={() => openPanel('quote', { locality_coverage: String(DESTINATIONS[0].localityId) })} className="group relative rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-auto cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
                 <img
                   src={DESTINATIONS[0].image}
                   alt={DESTINATIONS[0].name}
@@ -426,7 +432,7 @@ function LandingContent() {
               </div>
 
               {/* Second large card */}
-              <div className="group relative rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-auto cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
+              <div onClick={() => openPanel('quote', { locality_coverage: String(DESTINATIONS[1].localityId) })} className="group relative rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-auto cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
                 <img
                   src={DESTINATIONS[1].image}
                   alt={DESTINATIONS[1].name}
@@ -443,7 +449,7 @@ function LandingContent() {
               {/* Two stacked smaller cards */}
               <div className="grid grid-cols-2 sm:col-span-2 lg:col-span-1 lg:grid-cols-1 gap-3 sm:gap-4">
                 {DESTINATIONS.slice(2).map((d, i) => (
-                  <div key={i} className="group relative rounded-2xl overflow-hidden h-44 sm:h-48 lg:h-auto lg:flex-1 cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
+                  <div key={i} onClick={() => openPanel('quote', { locality_coverage: String(d.localityId) })} className="group relative rounded-2xl overflow-hidden h-44 sm:h-48 lg:h-auto lg:flex-1 cursor-pointer border border-white/5 hover:border-yellow-400/30 transition-colors duration-500">
                     <img
                       src={d.image}
                       alt={d.name}
@@ -481,6 +487,7 @@ function LandingContent() {
               {ACTIVITIES.map((activity, i) => (
                 <div
                   key={i}
+                  onClick={() => openPanel('quote', { type_of_travel: String(activity.travelTypeId) })}
                   className="group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer h-44 sm:h-56 lg:h-72"
                 >
                   <img
@@ -562,6 +569,58 @@ function LandingContent() {
           </div>
         </section>
 
+        {/* ── CLAIMS ─────────────────────────────────────── */}
+        <section id="claims" className="scroll-mt-16 sm:scroll-mt-17 py-16 sm:py-24 bg-[#fafaf8] border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-10 sm:mb-16">
+              <div>
+                <p className="text-base sm:text-lg font-serif italic text-yellow-500 mb-2 sm:mb-3">Claims</p>
+                <h2 className="text-[clamp(2rem,5vw,3.8rem)] font-black leading-tight tracking-tight text-black">
+                  Fast claims,<br/>fair outcomes
+                </h2>
+              </div>
+              <p className="text-gray-500 max-w-sm text-sm sm:text-base leading-relaxed sm:text-right">
+                File, track, and get paid — all from your dashboard. No paperwork, no runaround.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-4 sm:gap-5">
+              {[
+                {
+                  icon: FileText,
+                  step: '01',
+                  title: 'File Online',
+                  description: 'Submit your claim through our dashboard in minutes. Upload documents, describe what happened.',
+                },
+                {
+                  icon: Clock,
+                  step: '02',
+                  title: 'Track Progress',
+                  description: 'Real-time updates on your claim status. No more wondering or waiting on hold.',
+                },
+                {
+                  icon: Banknote,
+                  step: '03',
+                  title: 'Get Paid',
+                  description: 'Approved claims paid directly to your bank. Most claims settled within 5 business days.',
+                },
+              ].map((card, i) => (
+                <div key={i} className="group rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 hover:border-yellow-400/50 transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                    <span className="text-3xl sm:text-4xl font-serif text-yellow-400/20 leading-none tracking-tight">{card.step}</span>
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-yellow-400 rounded-xl flex items-center justify-center">
+                      <card.icon className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
+                    </div>
+                    <div className="flex-1 h-px bg-gray-100" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-black mb-2 tracking-tight">{card.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{card.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── CTA BAND ───────────────────────────────────── */}
         <section className="bg-yellow-400 py-12 sm:py-20 relative overflow-hidden">
           {/* Diagonal stripes texture */}
@@ -603,7 +662,7 @@ function LandingContent() {
                   <div className="w-8 h-8 sm:w-9 sm:h-9 bg-yellow-400 rounded-xl flex items-center justify-center">
                     <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
                   </div>
-                  <span className="text-base sm:text-lg font-black">TravelShield</span>
+                  <span className="text-base sm:text-lg font-black">TravelsKit</span>
                 </div>
                 <p className="text-white/40 text-sm leading-relaxed max-w-xs">
                   Making travel insurance simple, fast, and actually useful. Since 2024.
@@ -629,7 +688,7 @@ function LandingContent() {
             </div>
 
             <div className="pt-6 sm:pt-8 border-t border-white/8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs text-white/30">
-              <p>© 2024 TravelShield. All rights reserved.</p>
+              <p>© 2025 TravelsKit. All rights reserved. travelskit.com</p>
               <p>Built for adventurers, by adventurers.</p>
             </div>
           </div>
@@ -637,7 +696,7 @@ function LandingContent() {
       </div>
 
       {/* ── PANELS ───────────────────────────────────── */}
-      <InsuranceFlowPanel open={activePanel === 'quote'} onClose={closePanel} />
+      <InsuranceFlowPanel open={activePanel === 'quote'} onClose={closePanel} prefill={panelParams} />
 
       <SlidePanel open={activePanel === 'login' || activePanel === 'verify'} onClose={closePanel} title="Sign In">
         <LoginPanel initialCode={activePanel === 'verify' ? panelParams.code : undefined} />

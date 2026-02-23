@@ -7,7 +7,7 @@ module Api
 
         if completed&.pdf_path && File.exist?(completed.pdf_path)
           send_file completed.pdf_path,
-            filename: "travelshield-policy-#{policy.id}.pdf",
+            filename: "travelskit-policy-#{policy.id}.pdf",
             type: "application/pdf",
             disposition: "attachment"
         else

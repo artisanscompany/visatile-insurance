@@ -123,8 +123,28 @@ type InsuranceFlowContextValue = {
 
 const InsuranceFlowContext = createContext<InsuranceFlowContextValue | null>(null)
 
-export function InsuranceFlowProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initialState)
+type InsuranceFlowProviderProps = {
+  children: ReactNode
+  prefill?: Record<string, string>
+}
+
+export function InsuranceFlowProvider({ children, prefill }: InsuranceFlowProviderProps) {
+  const init = prefill && Object.keys(prefill).length > 0
+    ? {
+        ...initialState,
+        quoteFormData: {
+          start_date: '',
+          end_date: '',
+          departure_country: '',
+          destination_countries: '',
+          coverage_tier: 1,
+          traveler_birth_dates: [''],
+          locality_coverage: prefill.locality_coverage ? Number(prefill.locality_coverage) : 207,
+          type_of_travel: prefill.type_of_travel ? Number(prefill.type_of_travel) : 1,
+        },
+      }
+    : initialState
+  const [state, dispatch] = useReducer(reducer, init)
 
   const submitQuote = useCallback(async (data: QuoteFormData) => {
     dispatch({ type: 'SET_PROCESSING', processing: true })

@@ -15,7 +15,7 @@ export function FunnelLayout({ children, title, currentStep }: FunnelLayoutProps
 
   return (
     <>
-      <Head title={title || 'TravelShield'} />
+      <Head title={title || 'TravelsKit'} />
 
       <div className="min-h-screen bg-background">
         <header className="border-b bg-card">
@@ -24,7 +24,7 @@ export function FunnelLayout({ children, title, currentStep }: FunnelLayoutProps
               href="/"
               className="text-lg font-semibold tracking-tight text-foreground hover:text-foreground/80 transition-colors"
             >
-              TravelShield
+              TravelsKit
             </a>
           </div>
         </header>
