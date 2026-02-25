@@ -54,7 +54,7 @@ class InsursClient
   def add_contract(policy, travelers, tariff_id: nil, email: nil)
     raise ArgumentError, "At least one traveler is required" if travelers.empty?
     first_traveler = travelers.first
-    insurer_email = email || policy.account.identities.first&.email_address || "noreply@example.com"
+    insurer_email = email || policy.account.identities.first&.email_address || "noreply@travelskit.com"
 
     post("services/api/add_contract", {
       product_id: PRODUCT_ID,
