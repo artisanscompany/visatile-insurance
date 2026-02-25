@@ -85,8 +85,21 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
-  max_connections: <%= ENV.fetch("DATABASE_POOL_SIZE") { 30 } %>
-  checkout_timeout: 5
-  idle_timeout: <%= ENV.fetch("DATABASE_IDLE_TIMEOUT") { 300 } %>
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    max_connections: <%= ENV.fetch("DATABASE_POOL_SIZE") { 30 } %>
+    checkout_timeout: 5
+    idle_timeout: <%= ENV.fetch("DATABASE_IDLE_TIMEOUT") { 300 } %>
+  queue:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    migrations_paths: db/migrate
+  cache:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    migrations_paths: db/migrate
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    migrations_paths: db/migrate
